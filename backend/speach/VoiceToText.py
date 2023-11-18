@@ -1,12 +1,12 @@
 import keyboard
+#from google.cloud import speech
 from google.cloud import speech
-
 import pyaudio
 import wave
 import os
 
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key.json"   ###PUT YOUR MANAGER JSON IN MAIN
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "speach/key.json"   ###PUT YOUR MANAGER JSON IN MAIN
 
 
 def MakeUserFile():
@@ -51,9 +51,9 @@ def MakeUserFile():
 
     print(f"Audio saved as Input.mp3")
 
-def GetUserInput(trueLine):             #be sure this file is download as input.mp3
+def GetUserInput():             #be sure this file is download as input.mp3
 
-    client = speech.SpeechClient.from_service_account_json('key.json')
+    client = speech.SpeechClient.from_service_account_json('speach/key.json')
 
     MakeUserFile()
 
@@ -66,16 +66,13 @@ def GetUserInput(trueLine):             #be sure this file is download as input.
 
     config = speech.RecognitionConfig(sample_rate_hertz = 44100,
                                   enable_automatic_punctuation = False,
-                                  language_code= 'es-MX')
+                                  language_code= 'en')
 
     response = client.recognize(config=config, audio=audio_file)
     userSays = response.results[0].alternatives[0].transcript
     print(userSays)
-    wordsInResponse = userSays.split()
-    wordsInTrue = trueLine.split()
-    percentage = GetPercentage(wordsInResponse, wordsInTrue)
-    print(f"you got {percentage}% correct!!!")
-    if wordsInTrue != wordsInResponse:
-        print("Did you say all the words?")
 
-    return percentage
+
+print(os.getcwd())
+
+GetUserInput()
