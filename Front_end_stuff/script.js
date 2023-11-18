@@ -56,9 +56,9 @@ function stopRecordingandSend() {
 
 
 
-function toggleWiggle() {
+function toggleWavyAnimation() {
   const wiggleLines = document.getElementById('wiggleLines');
-  wiggleLines.classList.toggle('wiggle-active');
+  wiggleLines.classList.toggle('wavy');
 }
   
   

@@ -171,3 +171,28 @@
   background-color: red; /* Change to your preferred color */
   /* You can adjust other styles like border, text color, etc. */
 }
+
+.wavy{
+  position: relative; 
+  width: 150px; 
+  height: 50px; 
+  background: #333;
+  overflow: hidden;
+}
+
+.wavy::before{
+  content: "cccccccc";
+  position: absolute; 
+  top: -47px; 
+  left: 0; 
+  font-size: 4em;
+  color: transparent; 
+  text-decoration-style: wavy;
+  text-decoration-color: #3350ff;
+  text-decoration-line: underline;}
+
+  @keyframes wiggle {
+    0% { transform: translateX(-1px); }
+    
+    100% { transform: translateX(-50px); }
+  }
