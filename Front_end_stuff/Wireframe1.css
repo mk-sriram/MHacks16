@@ -1,15 +1,23 @@
+div {
+  border: 2px solid black;
+}
+
 @keyframes shadow-inset-center {
+
   0% {
     box-shadow: inset 0 0 0 0 transparent;
   }
+
   to {
     box-shadow: inset 0 0 14px 0 rgb(0 0 0/50%);
   }
 }
-.recordButton{
+
+.recordButton {
   position: absolute;
-  bottom: 0px; 
+  bottom: 0px;
 }
+
 .wireframe-1-child {
   position: absolute;
   top: 0;
@@ -17,6 +25,7 @@
   width: 4px;
   height: 1024px;
 }
+
 .charbar-for-text1 {
   position: absolute;
   top: 57px;
@@ -27,6 +36,7 @@
   width: 351px;
   height: 916px;
 }
+
 .therapistcamera1,
 .usercamera1 {
   position: absolute;
@@ -40,12 +50,14 @@
   width: 916px;
   height: 619px;
 }
+
 .usercamera1 {
   top: 501px;
   left: 690px;
   width: 327px;
   height: 251px;
 }
+
 .chaticon1 {
   position: absolute;
   top: 7px;
@@ -54,6 +66,7 @@
   height: 55px;
   object-fit: cover;
 }
+
 .chat1,
 .videobutton1 {
   position: absolute;
@@ -64,21 +77,25 @@
   width: 200px;
   height: 69px;
 }
+
 .chat1 {
   top: 825px;
   left: 537px;
   opacity: 1;
 }
+
 .chat1.animate,
 .uservideo1.animate {
   animation: 1s ease 0s 1 normal backwards shadow-inset-center;
 }
+
 .videobutton1 {
   top: 0;
   left: 200px;
   transform: rotate(180deg);
   transform-origin: 0 0;
 }
+
 .cameraicon1 {
   position: absolute;
   top: 4px;
@@ -87,6 +104,7 @@
   height: 62.5px;
   object-fit: cover;
 }
+
 .uservideo1 {
   position: absolute;
   top: 825px;
@@ -95,6 +113,7 @@
   height: 69px;
   opacity: 1;
 }
+
 .voiceicon1 {
   position: absolute;
   top: 10px;
@@ -103,6 +122,7 @@
   height: 50px;
   object-fit: cover;
 }
+
 .voice1 {
   position: absolute;
   top: 825px;
@@ -114,9 +134,11 @@
   width: 200px;
   height: 69px;
 }
+
 .company3 {
   margin: 0;
 }
+
 .company2 {
   position: absolute;
   top: 835px;
@@ -126,6 +148,7 @@
   height: 54px;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
+
 .wireframe-1 {
   position: relative;
   background-color: var(--color-white);
@@ -137,31 +160,39 @@
   color: var(--color-dimgray);
   font-family: var(--font-inter);
 }
+
 @media screen and (max-width: 1200px) {
+
   .chat1,
   .voice1 {
     opacity: 1;
   }
+
   .chat1.animate,
   .voice1.animate {
     animation: 1s ease 0s 1 normal backwards shadow-inset-center;
   }
+
   @keyframes shadow-inset-center {
     0% {
       box-shadow: inset 0 0 0 0 transparent;
     }
+
     to {
       box-shadow: inset 0 0 14px 0 rgb(0 0 0/50%);
     }
   }
+
   @keyframes shadow-inset-center {
     0% {
       box-shadow: inset 0 0 0 0 transparent;
     }
+
     to {
       box-shadow: inset 0 0 14px 0 rgb(0 0 0/50%);
     }
   }
+
   .voice1:active {
     animation: 1s ease 0s infinite normal backwards shadow-inset-center;
     opacity: 1;
@@ -171,31 +202,47 @@
 
 .btn.mic-icon.clicked {
   /* Add your desired styles for the button when it's clicked */
-  background-color: red; /* Change to your preferred color */
+  background-color: red;
+  /* Change to your preferred color */
   /* You can adjust other styles like border, text color, etc. */
 }
 
-.wavy{
-  position: relative; 
-  width: 150px; 
-  height: 50px; 
+.wavy {
+  position: relative;
+  width: 150px;
+  height: 50px;
   background: #333;
   overflow: hidden;
 }
 
-.wavy::before{
+.wavy::before {
   content: "cccccccc";
-  position: absolute; 
-  top: -47px; 
-  left: 0; 
+  position: absolute;
+  top: -47px;
+  left: 0;
   font-size: 4em;
-  color: transparent; 
+  color: transparent;
   text-decoration-style: wavy;
   text-decoration-color: #3350ff;
-  text-decoration-line: underline;}
+  text-decoration-line: underline;
+}
 
-  @keyframes wiggle {
-    0% { transform: translateX(-1px); }
-    
-    100% { transform: translateX(-50px); }
+@keyframes wiggle {
+  0% {
+    transform: translateX(-1px);
   }
+
+  100% {
+    transform: translateX(-50px);
+  }
+}
+
+
+.outerdiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.videoControls{
+  justify-content: center;
+}
