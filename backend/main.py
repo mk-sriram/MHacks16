@@ -24,12 +24,12 @@ def handle_mp3_data():
         # Example: Save the MP3 data to a file
         with open('backend/speech/in/user_response.mp3', 'wb') as f:
             f.write(mp3_data.decode('base64'))
-            
+
         user_text = GetUserInput()
         post_user_message(user_text)
         therapist_text = get_therapist_message()
 
-        return jsonify({'success': True, 'message': 'MP3 data received and processed'})
+        return jsonify({'success': True, 'message': therapist_text})
     except Exception as e:
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
