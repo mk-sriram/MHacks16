@@ -1,5 +1,10 @@
 from openai import OpenAI
+import os 
 client = OpenAI()
+
+OpenAI.api_key = '' 
+
+
 
 user_msg = ''
 messages=[

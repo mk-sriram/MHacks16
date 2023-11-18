@@ -14,7 +14,6 @@ def home():
     return jsonify({'message': "Reached Server!"})
 
 
-
 @app.route('/postinput', methods=['POST'])
 def handle_input():
     try:
