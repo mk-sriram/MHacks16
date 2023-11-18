@@ -6,7 +6,7 @@ import elevenlabs
 
 
 
-def GetVoice(TextInput):
+def GetTherVoice(TextInput):
     url = "https://api.elevenlabs.io/v1/text-to-speech/GBv7mTt0atIp3Br8iCZE/stream"                                  #of a voice id
     
     CHUNK_SIZE = 1024
@@ -35,4 +35,4 @@ def GetVoice(TextInput):
 
 
 
-GetVoice("Hi I am thomas, what is your name")
+#GetVoice("Hi I am thomas, what is your name")

@@ -29,7 +29,7 @@ def handle_mp3_data():
         post_user_message(user_text)              #give the chatgpt 
         therapist_text = get_therapist_message()       
 
-        GetVoice(therapist_text)
+        GetTherVoice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
         print(directory_path)
