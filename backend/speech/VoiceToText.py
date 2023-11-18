@@ -69,7 +69,7 @@ def GetUserInput():             #be sure this file is download as input.mp3
 
     response = client.recognize(config=config, audio=audio_file)
     userSays = response.results[0].alternatives[0].transcript
-    print(userSays)
+    return userSays
 
 
 GetUserInput()
