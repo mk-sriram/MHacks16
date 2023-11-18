@@ -6,7 +6,7 @@ import elevenlabs
 
 
 
-def GetTherVoice(TextInput):
+def convert_to_voice(TextInput):
     url = "https://api.elevenlabs.io/v1/text-to-speech/GBv7mTt0atIp3Br8iCZE/stream"                                  #of a voice id
     
     CHUNK_SIZE = 1024
@@ -26,15 +26,9 @@ def GetTherVoice(TextInput):
         }
     response = requests.post(url, json=data, headers=headers, stream=True)
 
-    print(os.getcwd())
-
-    with open(f"backend\\speech\\out\\output.mp3", 'wb') as f:
+    with open(f"backend/speech/out/output.mp3", 'wb') as f:
         for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
             if chunk:
                 f.write(chunk)
         
- #   os.startfile("out/output.mp3")
-
-
-
-GetTherVoice("Hey, I'm having a really great day! my wife shot me and than cheated on me with my boyfriend")
+    os.startfile("backend/speech/out/output.mp3")
