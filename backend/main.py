@@ -39,9 +39,6 @@ def handle_mp3_data():
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
 
-@app.route('/getspeech', methods = ['GET'])
-def give_speech():
-
     
 if __name__ == "__main__": 
     #app.run(host = '127.0.0.1', port = 5000)
