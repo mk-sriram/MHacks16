@@ -163,3 +163,10 @@
     opacity: 1;
   }
 }
+
+
+.btn.mic-icon.clicked {
+  /* Add your desired styles for the button when it's clicked */
+  background-color: red; /* Change to your preferred color */
+  /* You can adjust other styles like border, text color, etc. */
+}
