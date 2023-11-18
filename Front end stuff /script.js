@@ -9,7 +9,7 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
 
 // Function to start recording
 function startRecording() {
-  navigator.mediaDevices.getUserMedia({ audio: true })
+  naxsvigator.mediaDevices.getUserMedia({ audio: true })
     .then(function (stream) {
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = function (event) {
@@ -25,7 +25,6 @@ function startRecording() {
 }
 
 // Function to stop recording
-// Function to stop recording
 function stopRecording() {
   mediaRecorder.stop();
   mediaRecorder.onstop = function () {
@@ -33,10 +32,25 @@ function stopRecording() {
       type: 'audio/mp3'
     };
     const blob = new Blob(recordedChunks, options);
-    Recorder.forceDownload(blob, 'recorded_audio.mp3'); // Download the MP3 file
+    const audioURL = URL.createObjectURL(blob);
+    
+    // Create a download link
+    const downloadLink = document.createElement('a');
+    downloadLink.href = audioURL;
+    downloadLink.download = 'recorded_audio.mp3';
+    document.body.appendChild(downloadLink);
+    
+    // Trigger download
+    downloadLink.click();
+
+    // Clean up
+    URL.revokeObjectURL(audioURL);
+    document.body.removeChild(downloadLink);
+    
     recordedChunks = [];
   };
 }
+
 
 
 function toggleWiggle() {
@@ -47,16 +61,19 @@ function toggleWiggle() {
   
   // Example: Trigger startRecording() and stopRecording() functions when the button is clicked
   const recordButton = document.getElementById('recordButton');
-  recordButton.addEventListener('click', function() {
-    if (!recordButton.classList.contains('recording')) {
-      startRecording();
-      recordButton.classList.add('recording');
-      recordButton.style.backgroundColor = "red";
-    } else {
-      recordButton.style.backgroundColor = "transparent";
-      stopRecording();
-      recordButton.classList.remove('recording');
-      
-    }
-  });
+    let isRecording = false;
+
+recordButton.addEventListener('click', function() {
+  if (!isRecording) {
+    startRecording();
+    isRecording = true;
+    recordButton.classList.add('recording');
+    recordButton.style.backgroundColor = "red";
+  } else {
+    stopRecording();
+    isRecording = false;
+    recordButton.classList.remove('recording');
+    recordButton.style.backgroundColor = "transparent";
+  }
+});
   
