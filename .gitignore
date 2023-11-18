@@ -1,3 +1,4 @@
 .vscode
+backend/key.json
 backend/keys.json
 *.pyc
