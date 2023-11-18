@@ -91,3 +91,28 @@
 .videoControls{
   justify-content: center;
 }
+
+
+.chat-box .chat{
+  display: flex;
+}
+
+.chat-box .chat p{
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 10px 10px 0 10px;
+  background: #724ae9;
+}
+
+.chat-box .incoming p{
+  border-radius: 10px 10px 10px 0;
+  background: #242424;
+}
+
+.chat-box .incoming{
+  justify-content: flex-start;
+}
+
+.chat-box .outgoing{
+  justify-content: flex-end;
+}
