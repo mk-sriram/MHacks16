@@ -28,6 +28,8 @@ def handle_mp3_data():
         user_text = GetUserInput()
         post_user_message(user_text)
         therapist_text = get_therapist_message()
+        give_speech(therapist_text)
+
 
         return jsonify({'success': True, 'message': therapist_text})
     except Exception as e:
@@ -35,7 +37,13 @@ def handle_mp3_data():
         return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/getspeech', methods = ['GET'])
-def give_speech():
+def give_speech(therapist_text):
+    ''' 
+    Convert therapist text to speech and return the file
+    '''
+
+
+
 
     
 if __name__ == "__main__": 
