@@ -1,5 +1,6 @@
-from speach.TextToVoice import *
-from speach.VoiceToText import *
+from speech.TextToVoice import *
+from speech.VoiceToText import *
+from therapy import get_therapist_message, post_user_message
 from flask import Flask, jsonify, request, send_file,render_template,send_file
 from flask_cors import CORS
 import os
@@ -21,18 +22,20 @@ def handle_mp3_data():
 
         # Process the MP3 data as needed
         # Example: Save the MP3 data to a file
-        with open('backend/speech/user_response.mp3', 'wb') as f:
+        with open('backend/speech/in/user_response.mp3', 'wb') as f:
             f.write(mp3_data.decode('base64'))
-
-        GetUserInput();
+            
+        user_text = GetUserInput()
+        post_user_message(user_text)
+        therapist_text = get_therapist_message()
 
         return jsonify({'success': True, 'message': 'MP3 data received and processed'})
     except Exception as e:
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
 
-@app.route('/getmp3', methods = ['GET'])
-def give_mp3():
+@app.route('/getspeech', methods = ['GET'])
+def give_speech():
 
     
 if __name__ == "__main__": 

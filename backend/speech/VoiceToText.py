@@ -51,7 +51,6 @@ def MakeUserFile():
     print(f"Audio saved as Input.mp3")
 
 def GetUserInput():             #be sure this file is download as input.mp3
-    print(os.getcwd())
     client = speech.SpeechClient.from_service_account_json('backend/key.json')
 
     MakeUserFile()
