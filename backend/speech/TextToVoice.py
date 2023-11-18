@@ -26,13 +26,15 @@ def GetTherVoice(TextInput):
         }
     response = requests.post(url, json=data, headers=headers, stream=True)
 
-    with open(f"out/output.mp3", 'wb') as f:
+    print(os.getcwd())
+
+    with open(f"backend\\speech\\out\\output.mp3", 'wb') as f:
         for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
             if chunk:
                 f.write(chunk)
         
-    os.startfile("out/output.mp3")
+ #   os.startfile("out/output.mp3")
 
 
 
-#GetVoice("Hi I am thomas, what is your name")
+GetTherVoice("Hey, I'm having a really great day! my wife shot me and than cheated on me with my boyfriend")
