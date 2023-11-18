@@ -13,6 +13,7 @@ def get_therapist_message():
     )
     messages.append({"role": "system", "content": completion.choices[0].message.content})
     return completion.choices[0].message.content
+
 def post_user_message(msg):
     messages.append({"role": "user", "content": msg})
 
