@@ -5,8 +5,7 @@ import pyaudio
 import wave
 import os
 
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "speach/key.json"   ###PUT YOUR MANAGER JSON IN MAIN
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "backend/key.json"   ###PUT YOUR MANAGER JSON IN MAIN
 
 
 def MakeUserFile():
@@ -52,8 +51,8 @@ def MakeUserFile():
     print(f"Audio saved as Input.mp3")
 
 def GetUserInput():             #be sure this file is download as input.mp3
-
-    client = speech.SpeechClient.from_service_account_json('speach/key.json')
+    print(os.getcwd())
+    client = speech.SpeechClient.from_service_account_json('backend/key.json')
 
     MakeUserFile()
 
@@ -72,7 +71,5 @@ def GetUserInput():             #be sure this file is download as input.mp3
     userSays = response.results[0].alternatives[0].transcript
     print(userSays)
 
-
-print(os.getcwd())
 
 GetUserInput()
