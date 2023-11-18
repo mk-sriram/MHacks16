@@ -78,3 +78,4 @@ async function stopRecordingAndSend() {
   });
   
   
+const chatboxInput = document.querySelector(".chatInput text");
