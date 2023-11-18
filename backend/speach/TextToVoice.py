@@ -26,7 +26,7 @@ def GetVoice(TextInput):
         }
     response = requests.post(url, json=data, headers=headers, stream=True)
 
-    with open(f"speach/out/output.mp3", 'wb') as f:
+    with open(f"out/output.mp3", 'wb') as f:
         for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
             if chunk:
                 f.write(chunk)
