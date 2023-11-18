@@ -26,8 +26,8 @@ def handle_mp3_data():
             f.write(mp3_data.decode('base64'))
 
         user_text = GetUserInput()
-        post_user_message(user_text)
-        therapist_text = get_therapist_message()
+        post_user_message(user_text)              #give the chatgpt 
+        therapist_text = get_therapist_message()       
 
         GetVoice(therapist_text)
 
@@ -38,15 +38,6 @@ def handle_mp3_data():
     except Exception as e:
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
-
-@app.route('/getspeech', methods = ['GET'])
-def give_speech(therapist_text):
-    ''' 
-    Convert therapist text to speech and return the file
-    '''
-
-
-
 
     
 if __name__ == "__main__": 
