@@ -28,10 +28,13 @@ def handle_mp3_data():
         user_text = GetUserInput()
         post_user_message(user_text)
         therapist_text = get_therapist_message()
-        give_speech(therapist_text)
 
+        GetVoice(therapist_text)
 
-        return jsonify({'success': True, 'message': therapist_text})
+        directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
+        print(directory_path)
+
+        return send_file(directory_path, as_attachment=True)
     except Exception as e:
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
