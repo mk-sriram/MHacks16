@@ -1,5 +1,5 @@
 from google.cloud import vision
-def detect_faces(path):
+def get_emotion_from_image(path):
     """Detects faces in an image."""
     client = vision.ImageAnnotatorClient.from_service_account_json('keys.json')
     with open(path, "rb") as image_file:
