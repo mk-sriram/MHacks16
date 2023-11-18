@@ -25,15 +25,18 @@ function startRecording() {
 }
 
 // Function to stop recording
-function stopRecording() {
+function stopRecordingandSend() {
   mediaRecorder.stop();
   mediaRecorder.onstop = function () {
     const options = {
       type: 'audio/mp3'
     };
     const blob = new Blob(recordedChunks, options);
-    const audioURL = URL.createObjectURL(blob);
-    
+
+    //cretaing a form data to send the audio file 
+    const formData = new FormData();
+    formData.append('audioFile', blob, 'recorded_audio.mp3');
+
     // Create a download link
     const downloadLink = document.createElement('a');
     downloadLink.href = audioURL;
@@ -53,9 +56,9 @@ function stopRecording() {
 
 
 
-function toggleWiggle() {
-    const wiggleLines = document.getElementById('wiggleLines');
-    wiggleLines.classList.toggle('wiggle-active');
+function toggleWavyAnimation() {
+  const wiggleLines = document.getElementById('wiggleLines');
+  wiggleLines.classList.toggle('wavy');
 }
   
   
@@ -67,10 +70,12 @@ recordButton.addEventListener('click', function() {
       isRecording = true;
       recordButton.classList.add('recording');
       recordButton.style.backgroundColor = "red";
+      toggleWiggle(); 
     } else {
       isRecording = false;
       recordButton.classList.remove('recording');
       recordButton.style.backgroundColor = "transparent";
+      toggleWiggle(); 
     }
 });
   
