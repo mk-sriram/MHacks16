@@ -1,7 +1,8 @@
 from speech.TextToVoice import *
 from speech.VoiceToText import *
-from therapy import get_therapist_message, post_user_message
+from therapy import get_therapist_message, post_user_message, set_emotion
 from flask import Flask, jsonify, request, send_file,render_template,send_file
+from vision.emotions import get_emotion_from_image
 from flask_cors import CORS
 import os
 
@@ -19,6 +20,7 @@ def handle_mp3_data():
     try:
         data = request.get_json()
         mp3_data = data['mp3Data']
+        emotion = data['emotion']
 
         # Process the MP3 data as needed
         # Example: Save the MP3 data to a file
@@ -39,7 +41,17 @@ def handle_mp3_data():
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
 
-    
+@app.route('/postimage', methods=['POST'])
+def post_image():
+    try:
+        image_file = request.files['imageFile']
+        # Do something with the image file, such as saving it to disk
+        image_file.save('backend/vision/user_image.jpg')
+        emotion, likelihood = get_emotion_from_image('backend/vision/user_image.jpg')
+        
+        return jsonify({'message': emotion}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 if __name__ == "__main__": 
     #app.run(host = '127.0.0.1', port = 5000)
     app.run()
