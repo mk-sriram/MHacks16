@@ -9,7 +9,7 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
 
 // Function to start recording
 function startRecording() {
-  naxsvigator.mediaDevices.getUserMedia({ audio: true })
+  navigator.mediaDevices.getUserMedia({ audio: true })
     .then(function (stream) {
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = function (event) {
@@ -25,7 +25,7 @@ function startRecording() {
 }
 
 // Function to stop recording
-function stopRecordingandSend() {
+function stopRecordingAndSend() {
   mediaRecorder.stop();
   mediaRecorder.onstop = function () {
     const options = {
@@ -33,27 +33,45 @@ function stopRecordingandSend() {
     };
     const blob = new Blob(recordedChunks, options);
 
-    //cretaing a form data to send the audio file 
+    // Create a FormData object to send the audio file
     const formData = new FormData();
     formData.append('audioFile', blob, 'recorded_audio.mp3');
 
-    // Create a download link
-    const downloadLink = document.createElement('a');
-    downloadLink.href = audioURL;
-    downloadLink.download = 'recorded_audio.mp3';
-    document.body.appendChild(downloadLink);
-    
-    // Trigger download
-    downloadLink.click();
+    // Send the audio file to the server using fetch
+
+    // fetch('/postmp3', {
+    //   method: 'POST',
+    //   body: formData,
+    // })
+    // .then(response => response.json()) // Assuming the server responds with JSON
+    // .then(data => {
+    //   console.log('Server response:', data);
+    // })
+    // .catch(error => {
+    //   console.error('Error sending the file:', error);
+    // });
+
+    fetch('/postmp3', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ mp3Data: recordedChunks }), // Assuming recordedChunks contains the recorded audio data
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Server response:', data);
+      // Process the server response as needed
+    })
+    .catch(error => {
+      console.error('Error sending the file:', error);
+    });
+  
 
     // Clean up
-    URL.revokeObjectURL(audioURL);
-    document.body.removeChild(downloadLink);
-    
     recordedChunks = [];
   };
 }
-
 
 
 function toggleWavyAnimation() {
@@ -63,19 +81,20 @@ function toggleWavyAnimation() {
   
   
   // Example: Trigger startRecording() and stopRecording() functions when the button is clicked
-const recordButton = document.getElementById('recordButton');
-let isRecording = false;
-recordButton.addEventListener('click', function() {
+  const recordButton = document.getElementById('recordButton');
+  let isRecording = false;
+  recordButton.addEventListener('click', function() {
     if (!isRecording) {
       isRecording = true;
       recordButton.classList.add('recording');
-      recordButton.style.backgroundColor = "red";
-      toggleWiggle(); 
+      recordButton.style.backgroundColor = 'red';
+      startRecording();
     } else {
       isRecording = false;
       recordButton.classList.remove('recording');
-      recordButton.style.backgroundColor = "transparent";
-      toggleWiggle(); 
+      recordButton.style.backgroundColor = 'transparent';
+      stopRecordingAndSend();
     }
-});
+  });
+  
   
