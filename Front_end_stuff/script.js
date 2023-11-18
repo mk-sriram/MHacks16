@@ -79,7 +79,7 @@ function toggleWavyAnimation() {
   wiggleLines.classList.toggle('wavy');
 }
   
-  
+
   // Example: Trigger startRecording() and stopRecording() functions when the button is clicked
   const recordButton = document.getElementById('recordButton');
   let isRecording = false;

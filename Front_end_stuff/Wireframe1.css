@@ -1,6 +1,4 @@
-div {
-  border: 2px solid black;
-}
+
 
 @keyframes shadow-inset-center {
 
@@ -84,82 +82,7 @@ div {
   opacity: 1;
 }
 
-.chat1.animate,
-.uservideo1.animate {
-  animation: 1s ease 0s 1 normal backwards shadow-inset-center;
-}
 
-.videobutton1 {
-  top: 0;
-  left: 200px;
-  transform: rotate(180deg);
-  transform-origin: 0 0;
-}
-
-.cameraicon1 {
-  position: absolute;
-  top: 4px;
-  left: 64.9px;
-  width: 70px;
-  height: 62.5px;
-  object-fit: cover;
-}
-
-.uservideo1 {
-  position: absolute;
-  top: 825px;
-  left: 761.1px;
-  width: 200px;
-  height: 69px;
-  opacity: 1;
-}
-
-.voiceicon1 {
-  position: absolute;
-  top: 10px;
-  left: calc(50% - 25px);
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-
-.voice1 {
-  position: absolute;
-  top: 825px;
-  left: 313px;
-  border-radius: var(--br-8xs);
-  background-color: var(--color-gainsboro);
-  border: 1px solid var(--color-black);
-  box-sizing: border-box;
-  width: 200px;
-  height: 69px;
-}
-
-.company3 {
-  margin: 0;
-}
-
-.company2 {
-  position: absolute;
-  top: 835px;
-  left: 77px;
-  display: inline-block;
-  width: 203px;
-  height: 54px;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.wireframe-1 {
-  position: relative;
-  background-color: var(--color-white);
-  width: 100%;
-  height: 1024px;
-  overflow: hidden;
-  text-align: left;
-  font-size: var(--font-size-21xl);
-  color: var(--color-dimgray);
-  font-family: var(--font-inter);
-}
 
 @media screen and (max-width: 1200px) {
 
