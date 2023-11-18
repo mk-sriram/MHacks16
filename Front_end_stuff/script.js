@@ -9,7 +9,7 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
 
 // Function to start recording
 function startRecording() {
-  navigator.mediaDevices.getUserMedia({ audio: true })
+  navigator.mediaDevices.getUserMedia({ audio: true, video: true })
     .then(function (stream) {
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = function (event) {
@@ -18,67 +18,69 @@ function startRecording() {
         }
       };
       mediaRecorder.start();
+      videoStream = stream; // Save video stream reference
     })
     .catch(function (err) {
-      console.error('Error accessing microphone:', err);
+      console.error('Error accessing microphone and camera:', err);
     });
 }
 
 // Function to stop recording
 function stopRecordingAndSend() {
-  mediaRecorder.stop();
-  mediaRecorder.onstop = function () {
-    const options = {
-      type: 'audio/mp3'
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    mediaRecorder.onstop = function () {
+      const options = {
+        type: 'audio/webm'
+      };
+      const audioBlob = new Blob(recordedChunks, options);
+
+      // Capture a photo using the user's camera
+      if (videoStream) {
+        const videoTrack = videoStream.getVideoTracks()[0];
+        const imageCapture = new ImageCapture(videoTrack);
+        imageCapture.takePhoto()
+          .then(photoBlob => {
+            // Create a FormData object to send the photo and audio file
+            const formData = new FormData();
+            formData.append('photo', photoBlob);
+            formData.append('audioFile', audioBlob, 'recorded_audio.webm');
+
+            // Send the photo and audio file to the server using fetch
+            fetch('/postmp3', {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => {
+              if (response.ok) {
+                return response.json();
+              }
+              throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+              console.log('Server response:', data);
+              // Handle the server response as needed
+            })
+            .catch(error => {
+              console.error('There was a problem with the fetch operation:', error);
+            });
+          })
+          .catch(error => {
+            console.error('Error capturing photo:', error);
+          });
+      }
+
+      // Clean up video stream
+      if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop());
+        videoStream = null;
+      }
+
+      // Clean up
+      recordedChunks = [];
     };
-    const blob = new Blob(recordedChunks, options);
-
-    // Create a FormData object to send the audio file
-    const formData = new FormData();
-    formData.append('audioFile', blob, 'recorded_audio.mp3');
-
-    // Send the audio file to the server using fetch
-
-    // fetch('/postmp3', {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-    // .then(response => response.json()) // Assuming the server responds with JSON
-    // .then(data => {
-    //   console.log('Server response:', data);
-    // })
-    // .catch(error => {
-    //   console.error('Error sending the file:', error);
-    // });
-
-    fetch('/postmp3', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ mp3Data: recordedChunks }), // Assuming recordedChunks contains the recorded audio data
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Server response:', data);
-      // Process the server response as needed
-    })
-    .catch(error => {
-      console.error('Error sending the file:', error);
-    });
-  
-
-    // Clean up
-    recordedChunks = [];
-  };
+  }
 }
-
-
-function toggleWavyAnimation() {
-  const wiggleLines = document.getElementById('wiggleLines');
-  wiggleLines.classList.toggle('wavy');
-}
-  
 
   // Example: Trigger startRecording() and stopRecording() functions when the button is clicked
   const recordButton = document.getElementById('recordButton');
