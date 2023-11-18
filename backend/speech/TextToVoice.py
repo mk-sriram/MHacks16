@@ -31,4 +31,3 @@ def convert_to_voice(TextInput):
             if chunk:
                 f.write(chunk)
         
-    os.startfile("backend/speech/out/output.mp3")
