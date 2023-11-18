@@ -56,24 +56,21 @@ function stopRecording() {
 function toggleWiggle() {
     const wiggleLines = document.getElementById('wiggleLines');
     wiggleLines.classList.toggle('wiggle-active');
-  }
+}
   
   
   // Example: Trigger startRecording() and stopRecording() functions when the button is clicked
-  const recordButton = document.getElementById('recordButton');
-    let isRecording = false;
-
+const recordButton = document.getElementById('recordButton');
+let isRecording = false;
 recordButton.addEventListener('click', function() {
-  if (!isRecording) {
-    startRecording();
-    isRecording = true;
-    recordButton.classList.add('recording');
-    recordButton.style.backgroundColor = "red";
-  } else {
-    stopRecording();
-    isRecording = false;
-    recordButton.classList.remove('recording');
-    recordButton.style.backgroundColor = "transparent";
-  }
+    if (!isRecording) {
+      isRecording = true;
+      recordButton.classList.add('recording');
+      recordButton.style.backgroundColor = "red";
+    } else {
+      isRecording = false;
+      recordButton.classList.remove('recording');
+      recordButton.style.backgroundColor = "transparent";
+    }
 });
   
