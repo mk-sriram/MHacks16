@@ -117,3 +117,11 @@
   justify-content: flex-end;
 }
 
+.chat-message {
+  display: flex;
+  align-items: center;
+}
+
+.chat-message svg {
+  margin-right: 10px; /* Adjust as needed for spacing */
+}
