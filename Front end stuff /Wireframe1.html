@@ -10,7 +10,7 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-8">
+      <div class="col-md-2 ml-4">
         <!-- Your content here -->
         <button id="recordButton" class="btn mic-icon">
           <?xml version="1.0" encoding="utf-8"?> 
@@ -18,15 +18,17 @@
           <span id="wiggleLines" class="wiggle-lines"></span>
         </button>
       </div>
-      <div class="col-4">
+      <div class="container mt-4">
+      <div class="col-md-4 ml-auto">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Chat</h5>
-            <div id="chatBox" style="height: 200px; overflow-y: scroll;"></div>
+            <div id="chatBox" style="height: 500px; overflow-y: scroll;"></div>
             <input id="chatInput" type="text" class="form-control" placeholder="Type your message...">
             <button id="sendButton" class="btn btn-primary mt-2">Send</button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
