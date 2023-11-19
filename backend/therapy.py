@@ -36,9 +36,7 @@ def GetPicToDisplay(msg, use_emotion= False):
         messages=mess
     )
     print(imageChoice.choices[0].message.content)
-    if imageChoice.choices[0].message.content == "anger":
-        return "backend/emotions/anger.png"
-    elif imageChoice.choices[0].message.content == "glee":
+    if imageChoice.choices[0].message.content == "glee":
         return "backend/emotions/glee.png"
     elif imageChoice.choices[0].message.content == "negative":
         return "backend/emotions/negative.png"
