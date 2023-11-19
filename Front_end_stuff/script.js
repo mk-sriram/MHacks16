@@ -80,6 +80,7 @@ async function stopRecordingAndSend() {
   
   const chatboxInput = document.getElementById('chatInput');
   const sendChatBtn = document.getElementById('sendButton');
+  const chatBox = document.getElementById('chat-box')
   
   // Function to create a chat message element
   const createChatList = (message, className) => {
