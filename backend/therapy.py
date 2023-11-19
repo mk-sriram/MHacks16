@@ -57,7 +57,7 @@ def plot_sentiment_graph():
     ax.bar(emotions, frequencies.values())
     
     # save as png
-    plt.savefig('backend/vision/out/plot.png')
+    plt.savefig('static/plt.png')
     return True
     
 
