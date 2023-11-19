@@ -127,8 +127,10 @@
 }
 
 .chat-box .incoming p{
-  border-radius: 10px 10px 10px 0;
-  background: #242424;
+  
+  display: inline-block;
+  max-width: 70%; /* Adjust the width of the message box */
+  word-wrap: break-word;
 }
 
 .chat-box .incoming{
@@ -147,4 +149,5 @@
 .chat-message svg {
   margin-right: 100px; /* Adjust as needed for spacing */
 }
+
 
