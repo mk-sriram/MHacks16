@@ -336,6 +336,7 @@ const viewStats = async (event) => {
   // Close the modal when the close button or outside the modal is clicked
   const viewStatsBtn = document.getElementById('viewStatsButton');
 if (viewStatsBtn) {
+  
   viewStatsBtn.addEventListener('click', viewStats);
 
 };
