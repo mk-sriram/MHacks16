@@ -4,7 +4,8 @@ client = OpenAI()
 
 user_msg = ''
 messages=[
-    {"role": "system", "content": "You are an experienced therapist. You will inquire about the user's problems and provide guidance to the user. Be brief and let the user do most of the talking."}
+    {"role": "system", "content": "You are an experienced therapist. You will inquire about the user's problems and provide guidance to the user. Be brief and let the user do most of the talking."},
+    {"role": "system", "content": "Is there anything you would like to talk about today?"},
 ]
 emotions =[]
 def add_emotion(emotion):
@@ -21,7 +22,8 @@ def post_user_message(msg, use_emotion=False):
     if use_emotion:
         msg += 'My current emotion is ' + emotions[-1] + '.'
     messages.append({"role": "user", "content": msg})
-
+def post_system_message(msg):
+    messages.append({"role": "system", "content": msg})
 
 def GetPicToDisplay(msg, use_emotion= False):
     mess = [

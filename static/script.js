@@ -58,19 +58,19 @@ async function stopRecordingAndSend() {
             body: formData,
           });
           console.log("Fetched from /postinput")
-          console.log(res)
+          
           if (res.ok) {
             console.log('Message sent successfully!');
             const responseData = await res.json();
+            therapist_response = responseData.message
+            user_text = responseData.user_text
+            createChatList(user_text, 'outgoing');
             console.log(responseData)
-            console.log("Therapist response: " + responseData.message)
-            // Handle the response here if needed
-            mp3_path = responseData.file_url
-            console.log(mp3_path)
-            const audio = new Audio(mp3_path);
-            audio.play();
-      
-            // // Display incoming message in the chat (just an example)
+            console.log("User text: " + user_text)
+            console.log("Therapist response: " + therapist_response)
+            
+            receiveAndPlayAudio();
+            
             createChatList(responseData.message, 'incoming');
           } else {
             console.error('Failed to send message');
@@ -120,11 +120,7 @@ const handleChat = async () => {
       const responseData = await response.json();
       console.log(responseData)
       console.log("Therapist response: " + responseData.message)
-      // Handle the response here if needed
-      mp3_path = responseData.file_url
-      console.log(mp3_path)
-      const audio = new Audio(mp3_path);
-      audio.play();
+      receiveAndPlayAudio();
 
       // // Display incoming message in the chat (just an example)
       createChatList(responseData.message, 'incoming');
@@ -207,39 +203,76 @@ const receiveMessageWithAnimation = (message) => {
 };
 
 
+
 // Function to handle receiving and playing audio from the backend
 const receiveAndPlayAudio = async () => {
   try {
-    const response = await fetch('/getaudio', { method: 'GET' }); 
+    const response = await fetch('/getmp3', { method: 'GET' }); 
 
     if (response.ok) {
-      const blob = await response.blob();
+      console.log('Audio fetched successfully!');
+      const audioData = await response.blob();
+      console.log(audioData)
+      const audioUrl = URL.createObjectURL(audioData);
+      console.log(audioUrl);
+      const audio = new Audio(audioUrl);
 
-      // Create an audio element
-      const audio = new Audio();
-      audio.src = URL.createObjectURL(blob);
-
-      // Play the received audio
+      // Start playing the audio
       audio.play();
-      
+
+      // Add pulsing effect
+      pulsingEffect(audio);
+
+      // Add event listener to stop pulsing after audio finishes playing
+      audio.addEventListener('ended', () => {
+        stopPulsing();
+      });
+
     } else {
-      console.error('Failed to receive audio from the backend');
+      console.error('Failed to fetch audio');
     }
   } catch (error) {
     console.error('Error fetching audio:', error);
   }
 };
 
+// Pulsing effect function
+const pulsingEffect = (audio) => {
+  const pulsingImage = document.getElementById('avatar'); // Replace with the actual ID of your image
+  let pulseSize = 10;
+
+  const updatePulses = () => {
+    // Check if the audio is still playing
+    if (audio && !audio.paused) {
+      pulsingImage.style.boxShadow = `0 0 ${pulseSize}px #ff0000`;
+      pulseSize += 2; // Adjust the pulsing speed by changing this value
+      requestAnimationFrame(updatePulses);
+    } else {
+      // Stop pulsing when the audio finishes or if it's not playing
+      stopPulsing();
+    }
+  };
+
+  // Start updating pulses
+  updatePulses();
+};
+
+// Function to stop pulsing
+const stopPulsing = () => {
+  const pulsingImage = document.getElementById('avatar'); // Replace with the actual ID of your image
+  pulsingImage.style.boxShadow = 'none';
+};
+
 // Call receiveAndPlayAudio function when needed
 // For example, you can call it on a button click event
-const playAudioButton = document.getElementById('playAudioButton'); // Replace with your button ID
-playAudioButton.addEventListener('click', receiveAndPlayAudio);
+//const playAudioButton = document.getElementById('playAudioButton'); // Replace with your button ID
+//playAudioButton.addEventListener('click', receiveAndPlayAudio);
 
 
 window.addEventListener('load', () => {
-  const initialMessage = "Hey, how are you doing?";
+  const initialMessage = "Is there anything you would like to talk about today?";
   receiveMessageWithAnimation(initialMessage);
+
 });
 
-receiveMessageWithAnimation(newMessage);
 
