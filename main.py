@@ -1,6 +1,6 @@
 from backend.speech.TextToVoice import convert_to_voice
 from backend.speech.VoiceToText import transcribe
-from backend.therapy import get_therapist_message, post_user_message,post_system_message, add_emotion, plot_sentiment_graph
+from backend.therapy import get_therapist_message, post_user_message,post_system_message, add_emotion, plot_sentiment_graph, emotion_from_text
 from flask import Flask, jsonify, request, send_file,render_template,send_file, make_response
 from backend.vision.emotions import get_emotion_from_image
 import os
@@ -60,8 +60,12 @@ def handle_text_input():
     try:
         print(request.json)
         user_text = request.json['userMessage']
-        print("HERE")
-        post_user_message(user_text, use_emotion=False)
+        emotion = emotion_from_text(user_text)
+        if emotion is not None:
+            print(f'Emotion: {emotion}')
+            add_emotion(emotion)
+
+        post_user_message(user_text, use_emotion=True if emotion is not None else False)
         
         therapist_text = get_therapist_message() 
         #therapist_text = "Tell me more about your day. It seems like you are feeling stressed."     
@@ -135,7 +139,7 @@ def handle_recorded_input():
 @app.route('/sessionstats', methods=['POST'])
 def get_session_stats():
     print("Got a request! Session stats")
-    plot_data = plot_sentiment_graph() # base64 encoded string
+    plot_data = plot_sentiment_graph() 
     if not plot_data:
         return jsonify({'success': False, 'error': 'No emotions detected'})
     return jsonify({'success': True, 'message': 'Successfully saved session stats'})
