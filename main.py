@@ -1,6 +1,6 @@
 from backend.speech.TextToVoice import convert_to_voice
 from backend.speech.VoiceToText import transcribe
-from backend.therapy import get_therapist_message, post_user_message, add_emotion
+from backend.therapy import get_therapist_message, post_user_message, add_emotion, GetPicToDisplay
 from flask import Flask, jsonify, request, send_file,render_template,send_file
 from backend.vision.emotions import get_emotion_from_image
 import os
@@ -8,6 +8,9 @@ import json
 from pydub import AudioSegment
 import io
 app = Flask(__name__, static_url_path='/static')
+
+
+
 
 @app.route('/', methods=['GET'])
 def index():
@@ -20,11 +23,25 @@ def handle_text_input():
         post_user_message(user_text, use_emotion=False)
         therapist_text = get_therapist_message()       
 
+        emotionFile = GetPicToDisplay(user_text, use_emotion = False)
+
         convert_to_voice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
 
-        return send_file(directory_path, as_attachment=True)
+        files = []
+        files.append(directory_path)
+        files.append(emotionFile)
+
+        print(emotionFile)
+        print(directory_path)
+        print(therapist_text)
+
+        for file in files:
+            file.save(file.filename)
+
+        return "<h1>Files Uploaded Successfully.!</h1>"
+        #return send_file(directory_path, as_attachment=True)
     except Exception as e:
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
@@ -55,20 +72,36 @@ def handle_recorded_input():
 
         user_text = transcribe('backend/speech/in/user_response.mp3')
     
-        post_user_message(user_text, use_emotion=True)              #give the chatgpt 
+        post_user_message(user_text, use_emotion=True)   
+        
+        emotionFile = GetPicToDisplay(user_text, user_emotion = True)
+                   #give the chatgpt
+         
         therapist_text = get_therapist_message()      
 
         convert_to_voice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
+  
+        files = []
+        files.append(directory_path)
+        files.append(emotionFile)
+        print(emotionFile)
         print(directory_path)
-
         print(therapist_text)
 
-        return send_file(directory_path, as_attachment=True)
+        for file in files:
+            file.save(file.filename)
+        return "<h1>Files Uploaded Successfully.!</h1>"
+    
+#        return send_file(directory_path, as_attachment=True)
     except Exception as e:
         print(e)
         return jsonify({'success': False, 'error': str(e)})
+
+
+
+
 
 if __name__ == "__main__": 
     app.run(debug=True, port=5000)

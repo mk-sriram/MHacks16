@@ -7,6 +7,9 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
   console.error('getUserMedia is not supported on your browser');
 }
 
+
+
+
 // Function to start recording
 async function startRecording() {
   try {
@@ -141,3 +144,79 @@ const createChatList = (message, className) => {
 };
 
 sendChatBtn.addEventListener('click', handleChat);
+
+
+const newMessage = "In the current landscape of predictive healthcare algorithms";
+
+const typeMessageautoscroll = (message, element, speed = 50) => {
+  const messages = message.split('');
+  let i = 0;
+
+  const printMessage = () => {
+    if (i < messages.length) {
+      element.innerHTML += messages[i];
+      element.scrollTop = element.scrollHeight; // Scroll to the bottom
+      i++;
+      setTimeout(printMessage, speed); // Change speed here (milliseconds)
+    }
+  };
+
+  printMessage();
+};
+
+const receiveMessageWithAnimation = (message) => {
+  const chatBox = document.getElementById('chat-box');
+
+  // Create a new list item for the incoming message
+  const chatLi = document.createElement('li');
+  chatLi.classList.add('chat', 'incoming');
+
+  // Create a span element to contain the animated text
+  const messageSpan = document.createElement('span');
+  chatLi.appendChild(messageSpan);
+  chatBox.appendChild(chatLi);
+
+  // Call the typing animation function to simulate message typing
+  typeMessageautoscroll(message, messageSpan);
+  
+  // Scroll to the bottom to show the latest message
+  chatBox.scrollTop = chatBox.scrollHeight;
+};
+
+
+// Function to handle receiving and playing audio from the backend
+const receiveAndPlayAudio = async () => {
+  try {
+    const response = await fetch('/getaudio', { method: 'GET' }); 
+
+    if (response.ok) {
+      const blob = await response.blob();
+
+      // Create an audio element
+      const audio = new Audio();
+      audio.src = URL.createObjectURL(blob);
+
+      // Play the received audio
+      audio.play();
+      
+    } else {
+      console.error('Failed to receive audio from the backend');
+    }
+  } catch (error) {
+    console.error('Error fetching audio:', error);
+  }
+};
+
+// Call receiveAndPlayAudio function when needed
+// For example, you can call it on a button click event
+const playAudioButton = document.getElementById('playAudioButton'); // Replace with your button ID
+playAudioButton.addEventListener('click', receiveAndPlayAudio);
+
+
+window.addEventListener('load', () => {
+  const initialMessage = "Hey, how are you doing?";
+  receiveMessageWithAnimation(initialMessage);
+});
+
+receiveMessageWithAnimation(newMessage);
+
