@@ -18,8 +18,9 @@ def create_json_response(message, file_url):
     '''
     response_data = {
         'message': message,
-        'file_url': file_url  # You can use this URL to fetch the file on the frontend
+        'file_url': '/getmp3'  # You can use this URL to fetch the file on the frontend
     }
+    print(response_data)
     response = make_response(jsonify(response_data))
     response.headers['Content-Disposition'] = 'attachment; filename=output.mp3'
     response.headers['Content-Type'] = 'application/json'
@@ -29,6 +30,12 @@ def create_json_response(message, file_url):
 def index():
     curr_dir = os.getcwd()
     return render_template('Wireframe1.html', curr_dir=curr_dir)
+
+@app.route('/getmp3', methods=['GET'])
+def get_mp3():
+    directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
+    return send_file(directory_path, as_attachment=True)
+
 @app.route('/posttext', methods=['POST'])
 def handle_text_input():
     print("Got a request! Text input")
@@ -39,7 +46,7 @@ def handle_text_input():
         post_user_message(user_text, use_emotion=False)
         
         #therapist_text = get_therapist_message() 
-        therapist_text = "UPDATE THIS WHEN SRI COMES BACK"     
+        therapist_text = "Tell me more about your day. It seems like you are feeling stressed."     
         print(therapist_text) 
          
         #emotionFile = GetPicToDisplay(user_text, use_emotion = False)
@@ -86,13 +93,16 @@ def handle_recorded_input():
                    #give the chatgpt
          
         #therapist_text = get_therapist_message()  
-        therapist_text = "UPDATE THIS WHEN SRI COMES BACK"    
+        therapist_text = "UPDATE THIS WHEN SRI COMES BACK"   
+        print(therapist_text) 
 
         convert_to_voice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
 
-        return create_json_response(therapist_text, directory_path)
+        res = create_json_response(therapist_text, directory_path)
+        print(res)
+        return res
 
         
     except Exception as e:

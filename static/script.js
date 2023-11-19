@@ -59,8 +59,25 @@ async function stopRecordingAndSend() {
           });
           console.log("Fetched from /postinput")
           console.log(res)
+          if (res.ok) {
+            console.log('Message sent successfully!');
+            const responseData = await res.json();
+            console.log(responseData)
+            console.log("Therapist response: " + responseData.message)
+            // Handle the response here if needed
+            mp3_path = responseData.file_url
+            console.log(mp3_path)
+            const audio = new Audio(mp3_path);
+            audio.play();
+      
+            // // Display incoming message in the chat (just an example)
+            createChatList(responseData.message, 'incoming');
+          } else {
+            console.error('Failed to send message');
+          }
+        } 
 
-        } catch (error) {
+        catch (error) {
           console.error('Error capturing photo:', error);
         }
       }
@@ -104,6 +121,10 @@ const handleChat = async () => {
       console.log(responseData)
       console.log("Therapist response: " + responseData.message)
       // Handle the response here if needed
+      mp3_path = responseData.file_url
+      console.log(mp3_path)
+      const audio = new Audio(mp3_path);
+      audio.play();
 
       // // Display incoming message in the chat (just an example)
       createChatList(responseData.message, 'incoming');
