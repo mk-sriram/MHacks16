@@ -66,7 +66,7 @@
   font-size: 4em;
   color: transparent;
   text-decoration-style: wavy;
-  text-decoration-color: #3350ff;
+  text-decoration-color: #cddacf;
   text-decoration-line: underline;
 }
 
@@ -122,7 +122,7 @@
   color: #fff;
   padding: 10px;
   border-radius: 10px 10px 0 10px;
-  background: #724ae9;
+  background: #cddacf;
 }
 
 .chat-box .incoming p{
@@ -131,14 +131,14 @@
   justify-content: flex-start;
   color: #fff;
   border-radius: 10px 10px 10px 0;
-  background: #242424;
+  background: #009933;
 }
 
 .chat-box .incoming{
   margin-bottom: 5px; 
   color: #fff;
   border-radius: 10px 10px 10px 0;
-  background: #242424;
+  background: #009933;
 }
 
 .chat-box .outgoing{
