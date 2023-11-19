@@ -165,7 +165,7 @@ const createChatList = (message, className) => {
 sendChatBtn.addEventListener('click', handleChat);
 
 
-const newMessage = "In the current landscape of predictive healthcare algorithms";
+//const newMessage = "In the current landscape of predictive healthcare algorithms";
 
 const typeMessageautoscroll = (message, element, speed = 50) => {
   const messages = message.split('');
@@ -277,42 +277,118 @@ window.addEventListener('load', () => {
 
 });
 
+// JavaScript code (existing code remains unchanged)
 
-// Example: Trigger a function when the 'View Session Stats' button is clicked
-const viewStatsButton = document.getElementById('viewStatsButton');
-viewStatsButton.addEventListener('click', async function () {
-  // Add your logic for handling the 'View Session Stats' button click here
-  console.log("View Session Stats button clicked");
-  // You can perform actions like fetching and displaying session statistics
-  // For example, you can make a fetch request to a specific endpoint
-  // and handle the response accordingly.
-  const avatar = document.getElementById('avatar');
-  if (avatar.src !='static/plt.png'){
+// Function to close the modal
+const closeModal = () => {
+  modal.style.display = 'none';
+};
+
+// Close the modal when clicking outside the modal content or on the close icon
+window.addEventListener('click', (event) => {
+  const closeButton = modal.querySelector('.close');
+  if (event.target === modal || event.target === closeButton) {
+    closeModal();
+  }
+});
+
+const modal = document.getElementById('sessionStatsModal');
+const viewStatsBtn = document.getElementById('viewStatsButton');
+const viewStats = async (event) => {
+  event.preventDefault(); // Prevent the default behavior of the button (e.g., page refresh)
+  console.log('View Session Stats button clicked');
+  // Retrieve the modal element
+  if (!modal.classList.contains('loaded')) {
+    console.log('Loading session statistics...');
     try {
-      const response = await fetch('/sessionstats', {
-        method: 'POST',
-      });
-  
+
+
+      const response = await fetch('/sessionstats', { method: 'POST' });
+      console.log(response); 
       if (response.ok) {
+        console.log('Session statistics fetched successfully!');
         const sessionStats = await response.json();
         console.log('Session Statistics:', sessionStats);
-        const avatar = document.getElementById('avatar');
-        avatar.src = 'static/avatarnosmile.png'; 
-        // Add your code to display or handle the session statistics here
+
+        // Update the modal content with session statistics
+        const modalBody = modal.querySelector('.modal-body');
+        modalBody.innerHTML = ''; // Clear existing content
+        // Replace with the appropriate HTML structure to display the statistics
+        // Display the fetched image in the modal
+        const imgElement = document.createElement('img');
+        imgElement.src = sessionStats.image_url;
+        imgElement.alt = 'Session Statistics Image';
+        imgElement.classList.add('img-fluid');
+        modalBody.appendChild(imgElement);
+
+        modal.classList.add('loaded');
+        modal.style.display = 'block';
       } else {
         console.error('Failed to fetch session statistics');
       }
-
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Error fetching session statistics:', error);
     }
+  } else {
+    // If the modal content has already been loaded, display the modal
+    modal.style.display = 'block';
   }
-  else{
-    console.log("Session stats already displayed")
-    // change button text to "Hide Session Stats"
-    viewStatsButton.innerHTML = "Hide Session Stats"
-    avatar.src = 'static/avatarnosmile.png';
-  }
+  // Close the modal when the close button or outside the modal is clicked
+  const viewStatsBtn = document.getElementById('viewStatsButton');
+if (viewStatsBtn) {
+  viewStatsBtn.addEventListener('click', viewStats);
+
+};
+
+}
+
+// Add an event listener to the viewStatsButton
+viewStatsBtn.addEventListener('click', viewStats);
+
+
+
+// Example: Trigger a function when the 'View Session Stats' button is clicked
+
+// const viewStatsButton = document.getElementById('viewStatsButton');
+// viewStatsButton.addEventListener('click', async function () {
+
+
+  // Add your logic for handling the 'View Session Stats' button click here
+
+
+  // console.log("View Session Stats button clicked");
+  // You can perform actions like fetching and displaying session statistics
+  // For example, you can make a fetch request to a specific endpoint
+  // and handle the response accordingly.
+
+
+//   const avatar = document.getElementById('avatar');
+//   if (avatar.src !='static/plt.png'){
+//     try {
+//       const response = await fetch('/sessionstats', {
+//         method: 'POST',
+//       });
   
-});
+//       if (response.ok) {
+//         const sessionStats = await response.json();
+//         console.log('Session Statistics:', sessionStats);
+//         const avatar = document.getElementById('avatar');
+//         avatar.src = 'static/avatarnosmile.png'; 
+//         // Add your code to display or handle the session statistics here
+//       } else {
+//         console.error('Failed to fetch session statistics');
+//       }
+
+//     }
+//     catch (error) {
+//       console.error('Error fetching session statistics:', error);
+//     }
+//   }
+//   else{
+//     console.log("Session stats already displayed")
+//     // change button text to "Hide Session Stats"
+//     viewStatsButton.innerHTML = "Hide Session Stats"
+//     avatar.src = 'static/avatarnosmile.png';
+//   }
+  
+// });

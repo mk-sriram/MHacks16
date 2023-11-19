@@ -13,7 +13,7 @@ client = OpenAI()
 user_msg = ''
 
 messages=[
-    {"role": "system", "content": "You are an experienced therapist. You will inquire about the user's problems and provide guidance to the user. Be brief and let the user do most of the talking."},
+    {"role": "system", "content": "You are an experienced therapist. You will inquire about the user's problems and provide guidance to the user. dont always talk within 100 words, 100 words should be the max, but it should be variable from 5 to 100 words ."},
     {"role": "system", "content": "Is there anything you would like to talk about today?"},
 ]
 '''
