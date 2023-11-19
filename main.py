@@ -1,6 +1,6 @@
 from backend.speech.TextToVoice import convert_to_voice
 from backend.speech.VoiceToText import transcribe
-from backend.therapy import get_therapist_message, post_user_message, add_emotion, GetPicToDisplay
+from backend.therapy import get_therapist_message, post_user_message,post_system_message, add_emotion, GetPicToDisplay
 from flask import Flask, jsonify, request, send_file,render_template,send_file, make_response
 from backend.vision.emotions import get_emotion_from_image
 import os
@@ -10,7 +10,7 @@ import io
 app = Flask(__name__, static_url_path='/static')
 
 
-def create_json_response(message, file_url):
+def create_json_response(message, file_url, user_text=None):
     '''
     Creates a JSON response with the message and file URL
     :message (str): The message to send to chat
@@ -18,8 +18,11 @@ def create_json_response(message, file_url):
     '''
     response_data = {
         'message': message,
-        'file_url': file_url  # You can use this URL to fetch the file on the frontend
+        'file_url': '/getmp3'  # You can use this URL to fetch the file on the frontend
     }
+    if user_text is not None:
+        response_data['user_text'] = user_text
+    print(response_data)
     response = make_response(jsonify(response_data))
     response.headers['Content-Disposition'] = 'attachment; filename=output.mp3'
     response.headers['Content-Type'] = 'application/json'
@@ -29,6 +32,28 @@ def create_json_response(message, file_url):
 def index():
     curr_dir = os.getcwd()
     return render_template('Wireframe1.html', curr_dir=curr_dir)
+
+@app.route('/getmp3', methods=['GET'])
+def get_mp3():
+    directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
+    return send_file(directory_path, as_attachment=True)
+@app.route('/postsystem', methods=['POST'])
+def handle_system_input():
+    print("Got a request! System input")
+    try:
+        print(request.json)
+        system_text = request.json['systemMessage']
+        post_system_message(system_text, use_emotion=False)
+        # therapist_text = get_therapist_message()
+        
+        convert_to_voice(system_text)
+        
+        directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
+
+        return create_json_response(system_text, directory_path)
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'error': str(e)})
 @app.route('/posttext', methods=['POST'])
 def handle_text_input():
     print("Got a request! Text input")
@@ -39,7 +64,7 @@ def handle_text_input():
         post_user_message(user_text, use_emotion=False)
         
         #therapist_text = get_therapist_message() 
-        therapist_text = "UPDATE THIS WHEN SRI COMES BACK"     
+        therapist_text = "Tell me more about your day. It seems like you are feeling stressed."     
         print(therapist_text) 
          
         #emotionFile = GetPicToDisplay(user_text, use_emotion = False)
@@ -86,13 +111,15 @@ def handle_recorded_input():
                    #give the chatgpt
          
         #therapist_text = get_therapist_message()  
-        therapist_text = "UPDATE THIS WHEN SRI COMES BACK"    
+        therapist_text = "Tell me more about your day. It seems like you are feeling stressed."
+        print(therapist_text) 
 
         convert_to_voice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
 
-        return create_json_response(therapist_text, directory_path)
+        return create_json_response(therapist_text, directory_path,user_text=user_text)
+        
 
         
     except Exception as e:
