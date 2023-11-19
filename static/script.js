@@ -2,25 +2,6 @@ let mediaRecorder;
 let recordedChunks = [];
 let videoStream;
 
-const firstmsg = "Hey! How are you doing ?"; 
-
-const receiveMessagefirst = (message) => {
-  const chatBox = document.getElementById('chat-box');
-
-  // Create a new list item for the incoming messaged
-  const chatLi = document.createElement('li');
-  chatLi.classList.add('chat', 'incoming');
-  chatLi.innerHTML = `<p>${message}</p>`; // Assuming 'message' is the text message received
-
-  // Append the new message to the chat box
-  chatBox.appendChild(chatLi);
-
-  // Scroll to the bottom to show the latest message
-  chatBox.scrollTop = chatBox.scrollHeight;
-};
-
-receiveMessagefirst(firstmsg);
-
 // Check browser compatibility
 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
   console.error('getUserMedia is not supported on your browser');
@@ -66,7 +47,7 @@ async function stopRecordingAndSend() {
 
           // Send both blobs to /postinput endpoint
           const formData = new FormData();
-          formData.append('audioFile', audioBlob, 'recorded_audio.mp3');
+          formData.append('audioFile', audioBlob, 'user_response.mp3');
           formData.append('photo', photoBlob, 'user_image.jpg');
 
           res = await fetch('/postinput', {
@@ -160,47 +141,3 @@ const createChatList = (message, className) => {
 };
 
 sendChatBtn.addEventListener('click', handleChat);
-
-
-const newMessage = "In the ";
-// Function to handle receiving and displaying incoming chat messages
-
-const typeMessageautoscroll = (message, element, speed = 50) => {
-  const messages = message.split('');
-  let i = 0;
-
-  const printMessage = () => {
-    if (i < messages.length) {
-      element.innerHTML += messages[i];
-      element.scrollTop = element.scrollHeight; // Scroll to the bottom
-      i++;
-      setTimeout(printMessage, speed); // Change speed here (milliseconds)
-    }
-  };
-
-  printMessage();
-};
-
-const receiveMessageWithAnimation = (message) => {
-  const chatBox = document.getElementById('chat-box');
-
-  // Create a new list item for the incoming message
-  const chatLi = document.createElement('li');
-  chatLi.classList.add('chat', 'incoming');
-
-  // Create a span element to contain the animated text
-  const messageSpan = document.createElement('span');
-  chatLi.appendChild(messageSpan);
-  chatBox.appendChild(chatLi);
-
-  // Call the typing animation function to simulate message typing
-  typeMessageautoscroll(message, messageSpan);
-  
-  // Scroll to the bottom to show the latest message
-  chatBox.scrollTop = chatBox.scrollHeight;
-};
-
-// Function to simulate typing animation
-
-receiveMessageWithAnimation(newMessage);
-
