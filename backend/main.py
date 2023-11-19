@@ -34,16 +34,17 @@ def handle_text_input():
 @app.route('/postinput', methods=['POST'])
 def handle_recorded_input():
     try:
-        audio_file = request.files['audioFile']
-        photo_file = request.files['photo']
+        data = request.json
+        audio_file = data['audioFile']
+        photo_file = data['photo']
 
-        # Process the audio file
+        # Process the audio file and decode from base64
         with open('backend/speech/in/user_response.mp3', 'wb') as f:
-            f.write(audio_file.read())
+            f.write(base64.b64decode(audio_file))
 
         # Process the photo file
         with open('backend/vision/in/user_image.jpg', 'wb') as f:
-            f.write(photo_file.read())
+            f.write(base64.b64decode(photo_file))
 
         emotion, likelihood = get_emotion_from_image('backend/vision/in/user_image.jpg')
         add_emotion(emotion)
