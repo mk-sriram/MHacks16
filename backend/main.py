@@ -3,29 +3,27 @@ from speech.VoiceToText import transcribe
 from therapy import get_therapist_message, post_user_message, add_emotion
 from flask import Flask, jsonify, request, send_file,render_template,send_file
 from vision.emotions import get_emotion_from_image
-from flask_cors import CORS
 import os
-import base64
 
 app = Flask(__name__)
-CORS(app)  
 
 @app.route('/', methods=['GET'])
-def home():
-    return jsonify({'message': "Reached Server!"})
-
+def index():
+    curr_dir = os.getcwd()
+    return render_template('Front_end_stuff/Wireframe1.html', curr_dir=curr_dir)
 @app.route('/posttext', methods=['POST'])
 def handle_text_input():
     try:
         user_text = request.json['userText']
-        post_user_message(user_text, use_emotion=False)              #give the chatgpt 
+        post_user_message(user_text, use_emotion=False)
         therapist_text = get_therapist_message()       
 
         convert_to_voice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
 
-        return send_file(directory_path, as_attachment=True)
+        #return send_file(directory_path, as_attachment=True)
+        return jsonify({'success': True})
     except Exception as e:
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
@@ -33,6 +31,7 @@ def handle_text_input():
 
 @app.route('/postinput', methods=['POST'])
 def handle_recorded_input():
+    print("Got a request!")
     try:
         data = request.json
         audio_file = data['audioFile']
@@ -64,5 +63,4 @@ def handle_recorded_input():
         return jsonify({'success': False, 'error': str(e)})
 
 if __name__ == "__main__": 
-    #app.run(host = '127.0.0.1', port = 5000)
-    app.run()
+    app.run(debug=True, port=5000)
