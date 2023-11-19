@@ -126,21 +126,28 @@
 }
 
 .chat-box .incoming p{
+  align-self: flex-start;
+  word-wrap: break-word; 
   padding: 10px;
   margin-bottom: 5px; 
   justify-content: flex-end;
   color: #fff;
   border-radius: 10px 10px 10px 0;
   background: #009933;
+  
+  
 }
 
 .chat-box .incoming{
+  align-self: flex-start;
   margin-bottom: 5px; 
   color: #fff;
   border-radius: 10px 10px 10px 0;
   background: #009933;
   padding: 10px;
   white-space: normal;
+  max-width: 50%;
+  
 }
 
 .chat-box .outgoing{
