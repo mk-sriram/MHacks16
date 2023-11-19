@@ -7,6 +7,7 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
   console.error('getUserMedia is not supported on your browser');
 }
 
+
 // Function to start recording
 async function startRecording() {
   try {
@@ -143,8 +144,7 @@ const createChatList = (message, className) => {
 sendChatBtn.addEventListener('click', handleChat);
 
 
-const newMessage = "In the current landscape of predictive healthcare algorithms, there is a deeper understanding that extends beyond their apparent function as predictive tools that assist doctors in forecasting potential diseases their patients might encounter. At first glance, these algorithms seem to leverage causal structures by discerning correlations between various patient attributes such as medical history, demographics, and lifestyle choices, and their potential health outcomes. However, a more nuanced understanding reveals that these algorithms, while aiming to improve patient care, grapple with a complex interplay of societal biases and ethical dilemmas. They operate within a feedback loop where their predictions influence medical interventions, which subsequently affect the data the algorithms learn from. This cyclic interaction has the potential to perpetuate inaccuracies and reinforce pre-existing biases ingrained within historical healthcare data. !";
-// Function to handle receiving and displaying incoming chat messages
+const newMessage = "In the current landscape of predictive healthcare algorithms";
 
 const typeMessageautoscroll = (message, element, speed = 50) => {
   const messages = message.split('');
