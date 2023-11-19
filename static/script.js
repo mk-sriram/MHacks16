@@ -52,10 +52,7 @@ async function stopRecordingAndSend() {
 
           res = await fetch('/postinput', {
             method: 'POST',
-            body: formData,
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+            body: formData
           });
           console.log("Fetched")
           console.log(res)

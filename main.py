@@ -34,8 +34,10 @@ def handle_text_input():
 def handle_recorded_input():
     ''''''
     print("Got a request!")
-    print(type(request.data))
-    print(request.files.keys())
+    print ('audioFile' in request.files)
+    print('photo' in request.files)
+    
+   # print(json.loads(request.data))
     try:
         print("in try block")
         data = json.loads(request.data)
