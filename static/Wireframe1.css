@@ -120,19 +120,22 @@
 
 .chat-box .chat p{
   color: #fff;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: 10px 10px 0 10px;
   background: #724ae9;
 }
 
 .chat-box .incoming p{
+  padding: 10px;
+  margin-bottom: 5px; 
+  justify-content: flex-start;
+  color: #fff;
   border-radius: 10px 10px 10px 0;
   background: #242424;
 }
 
 .chat-box .incoming{
-  padding: auto;
-  justify-content: flex-start;
+  margin-bottom: 5px; 
   color: #fff;
   border-radius: 10px 10px 10px 0;
   background: #242424;
@@ -142,12 +145,17 @@
   justify-content: flex-end;
 }
 
+.chat-box .outgoing p {
+  padding: 10px;
+  margin-bottom: 5px; 
+}
+
 .chat-message {
   display: flex;
   align-items: center;
 }
 
 .chat-message svg {
-  margin-right: 100px; /* Adjust as needed for spacing */
+  margin-right: 10px; /* Adjust as needed for spacing */
 }
 
