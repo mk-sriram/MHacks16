@@ -55,9 +55,9 @@ async function stopRecordingAndSend() {
 
           res = await fetch('/postinput', {
             method: 'POST',
-            body: formData
+            body: formData,
           });
-          console.log("Fetched")
+          console.log("Fetched from /postinput")
           console.log(res)
 
         } catch (error) {
@@ -100,11 +100,13 @@ const handleChat = async () => {
 
     if (response.ok) {
       console.log('Message sent successfully!');
-      // const responseData = await response.json();
+      const responseData = await response.json();
+      console.log(responseData)
+      console.log("Therapist response: " + responseData.message)
       // Handle the response here if needed
 
       // // Display incoming message in the chat (just an example)
-      // createChatList(responseData.message, 'incoming');
+      createChatList(responseData.message, 'incoming');
     } else {
       console.error('Failed to send message');
     }

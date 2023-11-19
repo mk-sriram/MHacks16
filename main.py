@@ -1,7 +1,7 @@
 from backend.speech.TextToVoice import convert_to_voice
 from backend.speech.VoiceToText import transcribe
 from backend.therapy import get_therapist_message, post_user_message, add_emotion, GetPicToDisplay
-from flask import Flask, jsonify, request, send_file,render_template,send_file
+from flask import Flask, jsonify, request, send_file,render_template,send_file, make_response
 from backend.vision.emotions import get_emotion_from_image
 import os
 import json
@@ -10,8 +10,21 @@ import io
 app = Flask(__name__, static_url_path='/static')
 
 
-
-
+def create_json_response(message, file_url):
+    '''
+    Creates a JSON response with the message and file URL
+    :message (str): The message to send to chat
+    :file_url (str): The URL of the audio
+    '''
+    response_data = {
+        'message': message,
+        'file_url': file_url  # You can use this URL to fetch the file on the frontend
+    }
+    response = make_response(jsonify(response_data))
+    response.headers['Content-Disposition'] = 'attachment; filename=output.mp3'
+    response.headers['Content-Type'] = 'application/json'
+    print(response.data)
+    return response
 @app.route('/', methods=['GET'])
 def index():
     curr_dir = os.getcwd()
@@ -25,28 +38,18 @@ def handle_text_input():
         print("HERE")
         post_user_message(user_text, use_emotion=False)
         
-        therapist_text = get_therapist_message()      
+        #therapist_text = get_therapist_message() 
+        therapist_text = "UPDATE THIS WHEN SRI COMES BACK"     
         print(therapist_text) 
          
-        emotionFile = GetPicToDisplay(user_text, use_emotion = False)
+        #emotionFile = GetPicToDisplay(user_text, use_emotion = False)
         
         convert_to_voice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
         
-        # Create a JSON response with both file and transcript
-        response_data = {
-            'therapist_text': therapist_text,
-            'file_url': directory_path  # You can use this URL to fetch the file on the frontend
-        }
 
-        # Set headers to force download
-        response.headers['Content-Disposition'] = 'attachment; filename=output.mp3'
-        response.headers['Content-Type'] = 'application/json'
-
-        # Create a response with JSON data
-        response = make_response(jsonify(response_data))
-        return response
+        return create_json_response(therapist_text, directory_path)
     except Exception as e:
         print(e)
         return jsonify({'success': False, 'error': str(e)})
@@ -79,27 +82,19 @@ def handle_recorded_input():
     
         post_user_message(user_text, use_emotion=True)   
         
-        emotionFile = GetPicToDisplay(user_text, user_emotion = True)
+        #emotionFile = GetPicToDisplay(user_text, user_emotion = True)
                    #give the chatgpt
          
-        therapist_text = get_therapist_message()      
+        #therapist_text = get_therapist_message()  
+        therapist_text = "UPDATE THIS WHEN SRI COMES BACK"    
 
         convert_to_voice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
-  
-        files = []
-        files.append(directory_path)
-        files.append(emotionFile)
-        print(emotionFile)
-        print(directory_path)
-        print(therapist_text)
 
-        for file in files:
-            file.save(file.filename)
-        return "<h1>Files Uploaded Successfully.!</h1>"
-    
-#        return send_file(directory_path, as_attachment=True)
+        return create_json_response(therapist_text, directory_path)
+
+        
     except Exception as e:
         print(e)
         return jsonify({'success': False, 'error': str(e)})
