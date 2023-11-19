@@ -78,15 +78,53 @@ async function stopRecordingAndSend() {
   });
   
   
-const chatboxInput = document.getElementById("chatInput");
-const sendChatBin = document.getElementById("sendButton");
-
-let userMessage;
-
-const handleChat = async() =>{
-  userMessage = chatboxInput.value.trim();
-  console.log(userMessage);
-  chatboxInput.value = '';
-}
-
-sendChatBin.addEventListener("click", handleChat);
+  const chatboxInput = document.getElementById('chatInput');
+  const sendChatBtn = document.getElementById('sendButton');
+  
+  // Function to create a chat message element
+  const createChatList = (message, className) => {
+    const chatLi = document.createElement('li');
+    chatLi.classList.add('chat', className);
+    chatLi.innerHTML = `<p>${message}</p>`;
+    chatBox.appendChild(chatLi);
+  };
+  
+  // Function to handle sending chat messages
+  const handleChat = async () => {
+    const userMessage = chatboxInput.value.trim();
+  
+    if (!userMessage) {
+      return;
+    }
+  
+    // Display outgoing message in the chat
+    createChatList(userMessage, 'outgoing');
+  
+    try {
+      const response = await fetch('http://localhost:5000/postinput', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userMessage }),
+      });
+  
+      if (response.ok) {
+        console.log('Message sent successfully!');
+        // const responseData = await response.json();
+        // Handle the response here if needed
+  
+        // // Display incoming message in the chat (just an example)
+        // createChatList(responseData.message, 'incoming');
+      } else {
+        console.error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  
+    // Clear input after sending message
+    chatboxInput.value = '';
+  };
+  
+  sendChatBtn.addEventListener('click', handleChat);
