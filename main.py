@@ -1,5 +1,6 @@
 from backend.speech.TextToVoice import convert_to_voice
 from backend.speech.VoiceToText import transcribe
+import backend.therapy
 from backend.therapy import get_therapist_message, post_user_message,post_system_message, add_emotion, plot_sentiment_graph, emotion_from_text
 from flask import Flask, jsonify, request, send_file,render_template,send_file, make_response
 from backend.vision.emotions import get_emotion_from_image
@@ -31,6 +32,8 @@ def create_json_response(message, file_url, user_text=None):
 @app.route('/', methods=['GET'])
 def index():
     curr_dir = os.getcwd()
+    backend.therapy.emotions = []
+    backend.therapy.messages = backend.therapy.messages[:2]
     return render_template('Wireframe1.html', curr_dir=curr_dir)
 
 @app.route('/getmp3', methods=['GET'])
@@ -142,7 +145,9 @@ def get_session_stats():
     plot_data = plot_sentiment_graph() 
     if not plot_data:
         return jsonify({'success': False, 'error': 'No emotions detected'})
-    return jsonify({'success': True, 'message': 'Successfully saved session stats'})
+    
+    # return base64 encoded image
+    return jsonify({'success': True, 'plot_data': plot_data})
 
 
 if __name__ == "__main__": 

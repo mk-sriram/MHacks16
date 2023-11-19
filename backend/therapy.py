@@ -68,9 +68,12 @@ def plot_sentiment_graph():
     # Plot the graph
     ax.bar(emotions_list, frequencies.values())
     
-    # save as png
-    plt.savefig('static/plt.png')
-    return True
+    # convert to base64
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read()).decode('utf-8')  # Decode bytes to a UTF-8 string
+    return string
     
 
 

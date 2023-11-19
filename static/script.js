@@ -309,23 +309,27 @@ const viewStats = async (event) => {
         console.log('Session statistics fetched successfully!');
         const sessionStats = await response.json();
         console.log('Session Statistics:', sessionStats);
-
+        
+        // Correct the variable name here
+        const sessionStatsImage = document.getElementById('plot_data');
+        
         // Update the modal content with session statistics
         const modalBody = modal.querySelector('.modal-body');
         modalBody.innerHTML = ''; // Clear existing content
         // Replace with the appropriate HTML structure to display the statistics
         // Display the fetched image in the modal
         const imgElement = document.createElement('img');
-        imgElement.src = 'static/plt.png?timestamp=${timestamp}';
+        imgElement.src = `data:image/png;base64, ${sessionStats.plot_data}`;
         imgElement.alt = 'Session Statistics Image';
         imgElement.classList.add('img-fluid');
         modalBody.appendChild(imgElement);
-
+      
         modal.classList.add('loaded');
         modal.style.display = 'block';
       } else {
         console.error('Failed to fetch session statistics');
       }
+      
     } catch (error) {
       console.error('Error fetching session statistics:', error);
     }
