@@ -28,7 +28,7 @@ def transcribe(mp3_path):             #be sure this file is download as input.mp
     print(type(response))
     print(response)
     if len(response.results) == 0:
-        return "Sorry, I didn't quite catch that. Could you repeat that?"
+        return None
     else:
         userSays = response.results[0].alternatives[0].transcript
         return userSays

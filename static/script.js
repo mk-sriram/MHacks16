@@ -244,11 +244,13 @@ const pulsingEffect = (audio) => {
   const updatePulses = () => {
     // Check if the audio is still playing
     if (audio && !audio.paused) {
+      pulsingImage.src = 'static/avatartalk.png'; 
       pulsingImage.style.boxShadow = `0 0 ${pulseSize}px #009933`;
       pulseSize += 2; // Adjust the pulsing speed by changing this value
       requestAnimationFrame(updatePulses);
     } else {
       // Stop pulsing when the audio finishes or if it's not playing
+      pulsingImage.src = 'static/avatarnosmile.png'; 
       stopPulsing();
     }
   };
@@ -276,3 +278,41 @@ window.addEventListener('load', () => {
 });
 
 
+// Example: Trigger a function when the 'View Session Stats' button is clicked
+const viewStatsButton = document.getElementById('viewStatsButton');
+viewStatsButton.addEventListener('click', async function () {
+  // Add your logic for handling the 'View Session Stats' button click here
+  console.log("View Session Stats button clicked");
+  // You can perform actions like fetching and displaying session statistics
+  // For example, you can make a fetch request to a specific endpoint
+  // and handle the response accordingly.
+  const avatar = document.getElementById('avatar');
+  if (avatar.src !='static/plt.png'){
+    try {
+      const response = await fetch('/sessionstats', {
+        method: 'POST',
+      });
+  
+      if (response.ok) {
+        const sessionStats = await response.json();
+        console.log('Session Statistics:', sessionStats);
+        const avatar = document.getElementById('avatar');
+        avatar.src = 'static/avatarnosmile.png'; 
+        // Add your code to display or handle the session statistics here
+      } else {
+        console.error('Failed to fetch session statistics');
+      }
+
+    }
+    catch (error) {
+      console.error('Error fetching session statistics:', error);
+    }
+  }
+  else{
+    console.log("Session stats already displayed")
+    // change button text to "Hide Session Stats"
+    viewStatsButton.innerHTML = "Hide Session Stats"
+    avatar.src = 'static/avatarnosmile.png';
+  }
+  
+});
