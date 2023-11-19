@@ -45,7 +45,7 @@
 
 .btn.mic-icon.clicked {
   /* Add your desired styles for the button when it's clicked */
-  background-color: red;
+  background-color: rgb(132, 24, 24);
   /* Change to your preferred color */
   /* You can adjust other styles like border, text color, etc. */
 }
@@ -113,6 +113,9 @@
   justify-content: center;
 }
 
+.card{
+  border-radius: 50px 50px 50px 50px;
+}
 
 .chat-box .chat{
   display: flex;
@@ -133,9 +136,7 @@
   justify-content: flex-end;
   color: #fff;
   border-radius: 10px 10px 10px 0;
-  background: #009933;
-  
-  
+  background: #599359;
 }
 
 .chat-box .incoming{
@@ -143,7 +144,7 @@
   margin-bottom: 5px; 
   color: #fff;
   border-radius: 10px 10px 10px 0;
-  background: #009933;
+  background: #599359;
   padding: 10px;
   white-space: normal;
   max-width: 50%;
@@ -177,10 +178,20 @@
 .btn.btn-primary {
   /* Add your styles for the "Send" button here */
   /* For example: */
-  border: 2px solid #009933;
-  background-color: #009933;
+  border: 2px solid #599359;
+  background-color: #599359;
   color: white;
   /* Add more styles as needed */
+}
+
+.btn.btn-info{
+  border: 2px solid #599359;
+  background-color: #599359;
+  color: white;
+}
+
+.form-control{
+  border-radius: 10px 10px 10px 10px;
 }
 
 
