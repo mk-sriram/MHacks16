@@ -18,39 +18,44 @@ def index():
     return render_template('Wireframe1.html', curr_dir=curr_dir)
 @app.route('/posttext', methods=['POST'])
 def handle_text_input():
+    print("Got a request! Text input")
     try:
-        user_text = request.json['userText']
+        print(request.json)
+        user_text = request.json['userMessage']
+        print("HERE")
         post_user_message(user_text, use_emotion=False)
-        therapist_text = get_therapist_message()       
-
+        
+        therapist_text = get_therapist_message()      
+        print(therapist_text) 
+         
         emotionFile = GetPicToDisplay(user_text, use_emotion = False)
-
+        
         convert_to_voice(therapist_text)
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
+        
+        # Create a JSON response with both file and transcript
+        response_data = {
+            'therapist_text': therapist_text,
+            'file_url': directory_path  # You can use this URL to fetch the file on the frontend
+        }
 
-        files = []
-        files.append(directory_path)
-        files.append(emotionFile)
+        # Set headers to force download
+        response.headers['Content-Disposition'] = 'attachment; filename=output.mp3'
+        response.headers['Content-Type'] = 'application/json'
 
-        print(emotionFile)
-        print(directory_path)
-        print(therapist_text)
-
-        for file in files:
-            file.save(file.filename)
-
-        return "<h1>Files Uploaded Successfully.!</h1>"
-        #return send_file(directory_path, as_attachment=True)
+        # Create a response with JSON data
+        response = make_response(jsonify(response_data))
+        return response
     except Exception as e:
-        print("Are you sure you provided an MP3?")
+        print(e)
         return jsonify({'success': False, 'error': str(e)})
 
 
 @app.route('/postinput', methods=['POST'])
 def handle_recorded_input():
     ''''''
-    print("Got a request!")
+    print("Got a request! Recorded input")
     files = request.files
     
     try:
