@@ -1,8 +1,8 @@
-from speech.TextToVoice import convert_to_voice
-from speech.VoiceToText import transcribe
-from therapy import get_therapist_message, post_user_message, add_emotion
+from backend.speech.TextToVoice import convert_to_voice
+from backend.speech.VoiceToText import transcribe
+from backend.therapy import get_therapist_message, post_user_message, add_emotion
 from flask import Flask, jsonify, request, send_file,render_template,send_file
-from vision.emotions import get_emotion_from_image
+from backend.vision.emotions import get_emotion_from_image
 import os
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
     curr_dir = os.getcwd()
-    return render_template('Front_end_stuff/Wireframe1.html', curr_dir=curr_dir)
+    return render_template('Wireframe1.html', curr_dir=curr_dir)
 @app.route('/posttext', methods=['POST'])
 def handle_text_input():
     try:
