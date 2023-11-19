@@ -24,9 +24,6 @@ def post_user_message(msg, use_emotion=False):
 
 
 def GetPicToDisplay(msg, use_emotion= False):
-    if use_emotion:
-        msg += 'My current emotion is ' + emotions[-1] + '.'
-
     mess = [
         {"role": "system",
          "content": "You will be given a prompt and an emotion, based on how you belive, you will say either anger, glee, negative, nuetral, positive, or suprised. Do not use any punctuation. Do not use uppercase letters:" },
@@ -37,17 +34,11 @@ def GetPicToDisplay(msg, use_emotion= False):
         messages=mess
     )
     print(imageChoice.choices[0].message.content)
-    if imageChoice.choices[0].message.content == "glee":
-        return "backend/emotions/glee.png"
-    elif imageChoice.choices[0].message.content == "negative":
-        return "backend/emotions/negative.png"
-    elif imageChoice.choices[0].message.content == "nuetral":
-        return "backend/emotions/nuetral.png"
-    elif imageChoice.choices[0].message.content == "positive":
-        return "backend/emotions/postive.png"
-    elif imageChoice.choices[0].message.content == "suprised":
-        return "backend/emotions/suprised.png"
-    else:
-        return "backend/emotions/nuetral.png"
-
-
+    ret = {"anger": "backend/expressions/anger.png",
+           "glee": "backend/expressions/glee.png",
+           "negative": "backend/expressions/negative.png",
+           "nuetral": "backend/expressions/nuetral.png",
+           "positive": "backend/expressions/postive.png",
+           "suprised": "backend/expressions/suprised.png",
+           "neutral": "backend/expressions/neutral.png"}
+    return ret[imageChoice.choices[0].message.content]
