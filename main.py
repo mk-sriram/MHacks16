@@ -11,6 +11,7 @@ app = Flask(__name__, static_url_path='/static')
 
 
 
+
 @app.route('/', methods=['GET'])
 def index():
     curr_dir = os.getcwd()
