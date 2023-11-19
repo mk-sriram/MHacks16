@@ -1,5 +1,5 @@
 # Mindscape: Revolutionizing Mental Well-being Support
-
+##[Watch a demo](https://www.youtube.com/watch?v=iAFcEi4joxI)
 ## Inspiration
 The inspiration for Mindscape stems from a collective desire to revolutionize mental well-being support. We envisioned a tool that seamlessly integrates AI counseling with personalized features to create a truly empathetic and supportive experience.
 
