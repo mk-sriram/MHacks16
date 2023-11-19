@@ -244,11 +244,13 @@ const pulsingEffect = (audio) => {
   const updatePulses = () => {
     // Check if the audio is still playing
     if (audio && !audio.paused) {
+      pulsingImage.src = 'static/avatartalk.png'; 
       pulsingImage.style.boxShadow = `0 0 ${pulseSize}px #009933`;
       pulseSize += 2; // Adjust the pulsing speed by changing this value
       requestAnimationFrame(updatePulses);
     } else {
       // Stop pulsing when the audio finishes or if it's not playing
+      pulsingImage.src = 'static/avatarnosmile.png'; 
       stopPulsing();
     }
   };
