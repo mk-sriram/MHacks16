@@ -60,7 +60,8 @@ def plot_sentiment_graph():
     fig, ax = plt.subplots()
     frequencies = {"anger": 0, "fear": 0, "joy": 0, "love": 0, "sadness": 0, "surprise": 0}
     for emotion in emotions:
-        frequencies[emotion] += 1
+        if emotion in frequencies:
+            frequencies[emotion] += 1
     emotions = list(frequencies.keys())  # Convert to list
     print(emotions)
 
