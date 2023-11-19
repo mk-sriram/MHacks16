@@ -244,7 +244,7 @@ const pulsingEffect = (audio) => {
   const updatePulses = () => {
     // Check if the audio is still playing
     if (audio && !audio.paused) {
-      pulsingImage.style.boxShadow = `0 0 ${pulseSize}px #ff0000`;
+      pulsingImage.style.boxShadow = `0 0 ${pulseSize}px #009933`;
       pulseSize += 2; // Adjust the pulsing speed by changing this value
       requestAnimationFrame(updatePulses);
     } else {
