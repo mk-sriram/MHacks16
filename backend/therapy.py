@@ -1,5 +1,5 @@
 from openai import OpenAI
-client = OpenAI()
+client = OpenAI(api_key="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")
 
 user_msg = ''
 messages=[
