@@ -67,7 +67,6 @@ def handle_recorded_input():
 
         return send_file(directory_path, as_attachment=True)
     except Exception as e:
-        print("Are you sure you provided an MP3?")
         print(e)
         return jsonify({'success': False, 'error': str(e)})
 
