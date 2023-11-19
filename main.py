@@ -1,6 +1,6 @@
 from backend.speech.TextToVoice import convert_to_voice
 from backend.speech.VoiceToText import transcribe
-from backend.therapy import get_therapist_message, post_user_message, add_emotion
+from backend.therapy import get_therapist_message, post_user_message, add_emotion, GetPicToDisplay
 from flask import Flask, jsonify, request, send_file,render_template,send_file
 from backend.vision.emotions import get_emotion_from_image
 import os
