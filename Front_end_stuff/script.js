@@ -78,14 +78,15 @@ async function stopRecordingAndSend() {
   });
   
   
-const chatboxInput = document.querySelector(".chatInput text");
-const sendChatBtn = document.querySelector(".chatInput sendButton");
+const chatboxInput = document.getElementById("chatInput");
+const sendChatBin = document.getElementById("sendButton");
 
 let userMessage;
 
-const handleChat = () =>{
+const handleChat = async() =>{
   userMessage = chatboxInput.value.trim();
   console.log(userMessage);
+  chatboxInput.value = '';
 }
 
 sendChatBin.addEventListener("click", handleChat);
