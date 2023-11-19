@@ -1,5 +1,6 @@
 from openai import OpenAI
-client = OpenAI()
+client = OpenAI(api_key="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")
+ # This is the API key for the OpenAI API REMOVE IT BEFORE COMMITTING
 
 user_msg = ''
 messages=[
