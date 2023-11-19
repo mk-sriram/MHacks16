@@ -162,7 +162,7 @@ const createChatList = (message, className) => {
 sendChatBtn.addEventListener('click', handleChat);
 
 
-const newMessage = "In the current landscape of predictive healthcare ";
+const newMessage = "In the ";
 // Function to handle receiving and displaying incoming chat messages
 
 const typeMessageautoscroll = (message, element, speed = 50) => {
