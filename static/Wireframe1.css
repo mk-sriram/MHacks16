@@ -159,3 +159,12 @@
   margin-right: 10px; /* Adjust as needed for spacing */
 }
 
+.btn.btn-primary {
+  /* Add your styles for the "Send" button here */
+  /* For example: */
+  border: 2px solid #009933;
+  background-color: #009933;
+  color: white;
+  /* Add more styles as needed */
+}
+
