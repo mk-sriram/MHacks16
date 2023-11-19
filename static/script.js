@@ -8,6 +8,8 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
 }
 
 
+
+
 // Function to start recording
 async function startRecording() {
   try {
@@ -181,7 +183,40 @@ const receiveMessageWithAnimation = (message) => {
   chatBox.scrollTop = chatBox.scrollHeight;
 };
 
-// Function to simulate typing animation
+
+// Function to handle receiving and playing audio from the backend
+const receiveAndPlayAudio = async () => {
+  try {
+    const response = await fetch('/getaudio', { method: 'GET' }); 
+
+    if (response.ok) {
+      const blob = await response.blob();
+
+      // Create an audio element
+      const audio = new Audio();
+      audio.src = URL.createObjectURL(blob);
+
+      // Play the received audio
+      audio.play();
+      
+    } else {
+      console.error('Failed to receive audio from the backend');
+    }
+  } catch (error) {
+    console.error('Error fetching audio:', error);
+  }
+};
+
+// Call receiveAndPlayAudio function when needed
+// For example, you can call it on a button click event
+const playAudioButton = document.getElementById('playAudioButton'); // Replace with your button ID
+playAudioButton.addEventListener('click', receiveAndPlayAudio);
+
+
+window.addEventListener('load', () => {
+  const initialMessage = "Hey, how are you doing?";
+  receiveMessageWithAnimation(initialMessage);
+});
 
 receiveMessageWithAnimation(newMessage);
 
