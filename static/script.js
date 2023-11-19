@@ -141,7 +141,7 @@ recordButton.addEventListener('click', async function () {
   if (!recordButton.classList.contains('recording')) {
     await startRecording();
     recordButton.classList.add('recording');
-    recordButton.style.backgroundColor = 'red';
+    recordButton.style.backgroundColor = "hsla(360, 81%, 48%, 0.89)";
     console.log("started")
   } else {
     await stopRecordingAndSend();

@@ -90,14 +90,14 @@
 
 .videoTitle {
   position: relative;
-  transform: translateY(150%);
+  transform: translateY(70%);
   width: 100%;
   text-align: center;
 }
 
 .videoControls {
   position: relative;
-  top: 50%;
+  top: 47%;
   transform: translateY(-50%);
   width: 100%;
   text-align: center;
