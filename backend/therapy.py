@@ -39,12 +39,12 @@ def emotion_from_text(text):
     Determines the emotion from the text
     '''
     this_message = [{"role": "system", "content": 'Determine the emotion of the following text: '}, {"role": "user", "content": text}]
-    completion = client.completions.create(
-        completion = client.completions.create(
-            model=model,
-            prompt=this_message,
-        )
+    completion = client.chat.completions.create(
+        model=model,
+        messages=this_message
     )
+    return completion.choices[0].message.content
+
     return completion.choices[0].text
 def post_user_message(msg, use_emotion=False):
     if use_emotion:
