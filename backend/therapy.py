@@ -38,14 +38,13 @@ def emotion_from_text(text):
     '''
     Determines the emotion from the text
     '''
-    this_message = [{"role": "system", "content": 'Determine the emotion of the following text. Your options are (anger, fear, joy, love, sadness, surprise): '}, {"role": "user", "content": text}]
+    this_message = [{"role": "system", "content": 'Determine the emotion of the following text. Your options are (anger, fear, joy, love, sadness, surprise). Reply with only the name of the emotion: '}, {"role": "user", "content": text}]
     completion = client.chat.completions.create(
         model=model,
         messages=this_message
     )
     return completion.choices[0].message.content
 
-    return completion.choices[0].text
 def post_user_message(msg, use_emotion=False):
     if use_emotion:
         msg += 'My current emotion is ' + emotions[-1] + '.'
@@ -54,6 +53,7 @@ def post_system_message(msg):
     messages.append({"role": "system", "content": msg})
 def plot_sentiment_graph():
     global emotions
+    print(emotions)
     if not emotions:
         return None
     # graph of emotions with frequency
@@ -62,11 +62,11 @@ def plot_sentiment_graph():
     for emotion in emotions:
         if emotion in frequencies:
             frequencies[emotion] += 1
-    emotions = list(frequencies.keys())  # Convert to list
-    print(emotions)
+    emotions_list = list(frequencies.keys())  # Convert to list
+    
 
     # Plot the graph
-    ax.bar(emotions, frequencies.values())
+    ax.bar(emotions_list, frequencies.values())
     
     # save as png
     plt.savefig('static/plt.png')
