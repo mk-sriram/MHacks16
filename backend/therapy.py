@@ -8,11 +8,12 @@ messages=[
     {"role": "system", "content": "Is there anything you would like to talk about today?"},
 ]
 emotions =[]
+model = "gpt-4-1106-preview"
 def add_emotion(emotion):
     emotions.append(emotion)
 def get_therapist_message():
     completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model=model,
         messages=messages
     )
     messages.append({"role": "system", "content": completion.choices[0].message.content})

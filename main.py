@@ -44,7 +44,7 @@ def handle_system_input():
         print(request.json)
         system_text = request.json['systemMessage']
         post_system_message(system_text, use_emotion=False)
-        # therapist_text = get_therapist_message()
+        therapist_text = get_therapist_message()
         
         convert_to_voice(system_text)
         
@@ -63,8 +63,8 @@ def handle_text_input():
         print("HERE")
         post_user_message(user_text, use_emotion=False)
         
-        #therapist_text = get_therapist_message() 
-        therapist_text = "Tell me more about your day. It seems like you are feeling stressed."     
+        therapist_text = get_therapist_message() 
+        #therapist_text = "Tell me more about your day. It seems like you are feeling stressed."     
         print(therapist_text) 
          
         #emotionFile = GetPicToDisplay(user_text, use_emotion = False)
@@ -110,8 +110,8 @@ def handle_recorded_input():
         #emotionFile = GetPicToDisplay(user_text, user_emotion = True)
                    #give the chatgpt
          
-        #therapist_text = get_therapist_message()  
-        therapist_text = "Tell me more about your day. It seems like you are feeling stressed."
+        therapist_text = get_therapist_message()  
+        #therapist_text = "Tell me more about your day. It seems like you are feeling stressed."
         print(therapist_text) 
 
         convert_to_voice(therapist_text)

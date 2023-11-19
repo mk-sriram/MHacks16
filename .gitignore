@@ -2,3 +2,5 @@
 backend/key.json
 backend/keys.json
 *.pyc
+*.jpg
+*.mp3
