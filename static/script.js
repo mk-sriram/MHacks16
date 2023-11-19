@@ -100,9 +100,10 @@ async function stopRecordingAndSend() {
   
     // Display outgoing message in the chat
     createChatList(userMessage, 'outgoing');
+    console.log("sending post request")
   
     try {
-      const response = await fetch('http://localhost:5000/postinput', {
+      const response = await fetch('/postinput', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

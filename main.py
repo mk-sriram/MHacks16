@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request, send_file,render_template,send_file
 from backend.vision.emotions import get_emotion_from_image
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 @app.route('/', methods=['GET'])
 def index():

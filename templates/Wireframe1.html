@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Audio Recorder</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="Wireframe1.css" rel="stylesheet">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="{{ url_for('static', filename='Wireframe1.css') }}"  rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -69,6 +69,6 @@
   </div>
 
   <!-- Your script and style includes -->
-  <script src="script.js">
+  <script src="{{ url_for('static', filename='script.js') }}">
   </script>
 </body>
