@@ -1,5 +1,3 @@
-
-
 .recordButton {
   position: absolute;
   bottom: 0px;
@@ -82,6 +80,29 @@
   }
 }
 
+.row {
+  position: relative;
+  transform: translateX(50%);
+  transform: translateY(10%);
+  width: 100%;
+  text-align: center;
+}
+
+.videoTitle {
+  position: relative;
+  transform: translateY(150%);
+  width: 100%;
+  text-align: center;
+}
+
+.videoControls {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+}
+
 
 .outerdiv {
   display: flex;
@@ -91,3 +112,42 @@
 .videoControls{
   justify-content: center;
 }
+
+
+.chat-box .chat{
+  display: flex;
+}
+
+.chat-box .chat p{
+  color: #fff;
+  padding: 10px 10px;
+  border-radius: 10px 10px 0 10px;
+  background: #724ae9;
+}
+
+.chat-box .incoming p{
+  border-radius: 10px 10px 10px 0;
+  background: #242424;
+}
+
+.chat-box .incoming{
+  padding: auto;
+  justify-content: flex-start;
+  color: #fff;
+  border-radius: 10px 10px 10px 0;
+  background: #242424;
+}
+
+.chat-box .outgoing{
+  justify-content: flex-end;
+}
+
+.chat-message {
+  display: flex;
+  align-items: center;
+}
+
+.chat-message svg {
+  margin-right: 100px; /* Adjust as needed for spacing */
+}
+

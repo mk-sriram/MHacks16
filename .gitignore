@@ -1,6 +1,4 @@
 .vscode
+backend/key.json
 backend/keys.json
-
-# Ignore python generated files
-
 *.pyc
