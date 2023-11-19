@@ -2,25 +2,6 @@ let mediaRecorder;
 let recordedChunks = [];
 let videoStream;
 
-const firstmsg = "Hey! How are you doing ?"; 
-
-const receiveMessagefirst = (message) => {
-  const chatBox = document.getElementById('chat-box');
-
-  // Create a new list item for the incoming messaged
-  const chatLi = document.createElement('li');
-  chatLi.classList.add('chat', 'incoming');
-  chatLi.innerHTML = `<p>${message}</p>`; // Assuming 'message' is the text message received
-
-  // Append the new message to the chat box
-  chatBox.appendChild(chatLi);
-
-  // Scroll to the bottom to show the latest message
-  chatBox.scrollTop = chatBox.scrollHeight;
-};
-
-receiveMessagefirst(firstmsg);
-
 // Check browser compatibility
 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
   console.error('getUserMedia is not supported on your browser');
@@ -162,7 +143,7 @@ const createChatList = (message, className) => {
 sendChatBtn.addEventListener('click', handleChat);
 
 
-const newMessage = "In the current landscape of predictive healthcare ";
+const newMessage = "In the current landscape of predictive healthcare algorithms, there is a deeper understanding that extends beyond their apparent function as predictive tools that assist doctors in forecasting potential diseases their patients might encounter. At first glance, these algorithms seem to leverage causal structures by discerning correlations between various patient attributes such as medical history, demographics, and lifestyle choices, and their potential health outcomes. However, a more nuanced understanding reveals that these algorithms, while aiming to improve patient care, grapple with a complex interplay of societal biases and ethical dilemmas. They operate within a feedback loop where their predictions influence medical interventions, which subsequently affect the data the algorithms learn from. This cyclic interaction has the potential to perpetuate inaccuracies and reinforce pre-existing biases ingrained within historical healthcare data. !";
 // Function to handle receiving and displaying incoming chat messages
 
 const typeMessageautoscroll = (message, element, speed = 50) => {
