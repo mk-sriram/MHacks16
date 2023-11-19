@@ -47,7 +47,7 @@ async function stopRecordingAndSend() {
 
           // Send both blobs to /postinput endpoint
           const formData = new FormData();
-          formData.append('audioFile', audioBlob, 'recorded_audio.mp3');
+          formData.append('audioFile', audioBlob, 'user_response.mp3');
           formData.append('photo', photoBlob, 'user_image.jpg');
 
           res = await fetch('/postinput', {
