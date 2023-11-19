@@ -4,6 +4,7 @@ from backend.therapy import get_therapist_message, post_user_message, add_emotio
 from flask import Flask, jsonify, request, send_file,render_template,send_file
 from backend.vision.emotions import get_emotion_from_image
 import os
+import json
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -31,11 +32,23 @@ def handle_text_input():
 
 @app.route('/postinput', methods=['POST'])
 def handle_recorded_input():
+    ''''''
     print("Got a request!")
+    print(type(request.data))
+    print(request.files.keys())
     try:
-        data = request.json
+        print("in try block")
+        data = json.loads(request.data)
+        print("HERE")
+        body_data = data.get('body')
+        print(body_data)
+        
         audio_file = data['audioFile']
+        
         photo_file = data['photo']
+
+        test_audio = request.files['audioFile']
+        print(test_audio)
 
         # Process the audio file and decode from base64
         with open('backend/speech/in/user_response.mp3', 'wb') as f:
