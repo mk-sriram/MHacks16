@@ -84,7 +84,7 @@
   position: relative;
   transform: translateX(50%);
   transform: translateY(10%);
-  width: 100%;
+  width: 110%;
   text-align: center;
 }
 
@@ -128,7 +128,7 @@
 .chat-box .incoming p{
   padding: 10px;
   margin-bottom: 5px; 
-  justify-content: flex-start;
+  justify-content: flex-end;
   color: #fff;
   border-radius: 10px 10px 10px 0;
   background: #009933;
@@ -139,6 +139,8 @@
   color: #fff;
   border-radius: 10px 10px 10px 0;
   background: #009933;
+  padding: 10px;
+  white-space: normal;
 }
 
 .chat-box .outgoing{

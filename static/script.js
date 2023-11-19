@@ -270,7 +270,7 @@ const stopPulsing = () => {
 
 
 window.addEventListener('load', () => {
-  const initialMessage = "Is there anything you would like to talk about today?";
+  const initialMessage = "\tIs there anything you would like to talk about today?";
   receiveMessageWithAnimation(initialMessage);
 
 });
