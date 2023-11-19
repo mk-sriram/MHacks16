@@ -158,7 +158,13 @@
 .chat-message svg {
   margin-right: 10px; /* Adjust as needed for spacing */
 }
-
+#avatar {
+  border-radius: 50%;
+  width: 340px; /* Adjust the width as needed */
+  height: 340px; /* Adjust the height as needed */
+  object-fit: cover; /* Ensures the image covers the entire circular area */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow effect (adjust values as needed) */
+}
 .btn.btn-primary {
   /* Add your styles for the "Send" button here */
   /* For example: */

@@ -9,8 +9,11 @@ def get_emotion_from_image(path):
     response = client.face_detection(image=image)
     faces = response.face_annotations
     if len(faces) == 0:
-        return None
+        return None, None
     face = faces[0]
+    confidence = face.detection_confidence
+    if confidence < 0.5:
+        return None, None
 
     emotions = {'joy': face.joy_likelihood,
                'anger': face.anger_likelihood,
@@ -18,6 +21,7 @@ def get_emotion_from_image(path):
                'surprise': face.surprise_likelihood}
     
     # return highest likelihood emotion
+    
     emotion = None
     max_likelihood = 0
     for key in emotions:
