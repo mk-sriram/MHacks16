@@ -316,7 +316,7 @@ const viewStats = async (event) => {
         // Replace with the appropriate HTML structure to display the statistics
         // Display the fetched image in the modal
         const imgElement = document.createElement('img');
-        imgElement.src = sessionStats.image_url;
+        imgElement.src = 'static/plt.png';
         imgElement.alt = 'Session Statistics Image';
         imgElement.classList.add('img-fluid');
         modalBody.appendChild(imgElement);
