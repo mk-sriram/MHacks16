@@ -29,7 +29,7 @@ def handle_text_input():
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
 
-        files
+        files = []
         files.append(directory_path)
         files.append(emotionFile)
 
@@ -83,7 +83,7 @@ def handle_recorded_input():
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
   
-        files
+        files = []
         files.append(directory_path)
         files.append(emotionFile)
         print(emotionFile)
