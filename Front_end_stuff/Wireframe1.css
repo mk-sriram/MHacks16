@@ -123,12 +123,5 @@
 }
 
 .chat-message svg {
-  margin-right: 10px; /* Adjust as needed for spacing */
-}
-
-.chat-box .chatInput{
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 10px 10px 0 10px;
-  background: #724ae9;
+  margin-right: 100px; /* Adjust as needed for spacing */
 }
