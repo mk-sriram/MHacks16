@@ -24,8 +24,7 @@ def handle_text_input():
 
         directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
 
-        #return send_file(directory_path, as_attachment=True)
-        return jsonify({'success': True})
+        return send_file(directory_path, as_attachment=True)
     except Exception as e:
         print("Are you sure you provided an MP3?")
         return jsonify({'success': False, 'error': str(e)})
