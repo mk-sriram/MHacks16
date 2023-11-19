@@ -16,8 +16,9 @@ def get_therapist_message():
     messages.append({"role": "system", "content": completion.choices[0].message.content})
     return completion.choices[0].message.content
 
-def post_user_message(msg):
-    msg += 'My current emotion is ' + emotions[-1] + '.'
+def post_user_message(msg, use_emotion=False):
+    if use_emotion:
+        msg += 'My current emotion is ' + emotions[-1] + '.'
     messages.append({"role": "user", "content": msg})
 
 
