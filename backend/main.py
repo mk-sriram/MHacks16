@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request, send_file,render_template,send_file
 from vision.emotions import get_emotion_from_image
 from flask_cors import CORS
 import os
+import base64
 
 app = Flask(__name__)
 CORS(app)  
@@ -13,29 +14,42 @@ CORS(app)
 def home():
     return jsonify({'message': "Reached Server!"})
 
+@app.route('/posttext', methods=['POST'])
+def handle_text_input():
+    try:
+        user_text = request.json['userText']
+        post_user_message(user_text, use_emotion=False)              #give the chatgpt 
+        therapist_text = get_therapist_message()       
+
+        convert_to_voice(therapist_text)
+
+        directory_path = os.path.join(os.getcwd(), "backend", "speech", "out", "output.mp3")
+
+        return send_file(directory_path, as_attachment=True)
+    except Exception as e:
+        print("Are you sure you provided an MP3?")
+        return jsonify({'success': False, 'error': str(e)})
 
 
 @app.route('/postinput', methods=['POST'])
-def handle_input():
+def handle_recorded_input():
     try:
-        data = request.get_json()
-        mp3_data = data['audioFile']
-        image_data = data['photo']
+        audio_file = request.files['audioFile']
+        photo_file = request.files['photo']
 
-        # Process the MP3 data as needed
-        # Example: Save the MP3 data to a file
+        # Process the audio file
         with open('backend/speech/in/user_response.mp3', 'wb') as f:
-            f.write(mp3_data.decode('base64'))
+            f.write(audio_file.read())
 
-        # Process the image data as needed
-        # Example: Save the image data to a file
+        # Process the photo file
         with open('backend/vision/in/user_image.jpg', 'wb') as f:
-            f.write(image_data.decode('base64'))
+            f.write(photo_file.read())
+
         emotion, likelihood = get_emotion_from_image('backend/vision/in/user_image.jpg')
         add_emotion(emotion)
 
         user_text = transcribe('backend/speech/in/user_response.mp3')
-        post_user_message(user_text)              #give the chatgpt 
+        post_user_message(user_text, use_emotion=True)              #give the chatgpt 
         therapist_text = get_therapist_message()       
 
         convert_to_voice(therapist_text)
