@@ -316,7 +316,7 @@ const viewStats = async (event) => {
         // Replace with the appropriate HTML structure to display the statistics
         // Display the fetched image in the modal
         const imgElement = document.createElement('img');
-        imgElement.src = 'static/plt.png';
+        imgElement.src = 'static/plt.png?timestamp=${timestamp}';
         imgElement.alt = 'Session Statistics Image';
         imgElement.classList.add('img-fluid');
         modalBody.appendChild(imgElement);
@@ -336,7 +336,7 @@ const viewStats = async (event) => {
   // Close the modal when the close button or outside the modal is clicked
   const viewStatsBtn = document.getElementById('viewStatsButton');
 if (viewStatsBtn) {
-  
+  modal.classList.remove('loaded');
   viewStatsBtn.addEventListener('click', viewStats);
 
 };
