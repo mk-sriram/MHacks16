@@ -101,11 +101,13 @@ def handle_recorded_input():
         photo_file.save('backend/vision/in/user_image.jpg')
 
         emotion, likelihood = get_emotion_from_image('backend/vision/in/user_image.jpg')
-        add_emotion(emotion)
+        if emotion is not None:
+            print(f'Emotion: {emotion}, Likelihood: {likelihood}')
+            add_emotion(emotion)
 
         user_text = transcribe('backend/speech/in/user_response.mp3')
     
-        post_user_message(user_text, use_emotion=True)   
+        post_user_message(user_text, use_emotion=True if emotion is not None else False)   
         
         #emotionFile = GetPicToDisplay(user_text, user_emotion = True)
                    #give the chatgpt
