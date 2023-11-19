@@ -1,6 +1,11 @@
 from openai import OpenAI
 import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import io
+import base64
+import os
+
 matplotlib.use('agg')
 client = OpenAI()
  # This is the API key for the OpenAI API REMOVE IT BEFORE COMMITTING
@@ -46,16 +51,14 @@ def plot_sentiment_graph():
     for emotion in emotions:
         frequencies[emotion] += 1
     emotions = list(frequencies.keys())  # Convert to list
+    print(emotions)
 
     # Plot the graph
     ax.bar(emotions, frequencies.values())
     
-    # convert to bytes then to base64
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    res = base64.b64encode(output.getvalue()).decode('utf-8')
-    plt.close(fig)
-    return res
+    # save as png
+    plt.savefig('backend/vision/out/plot.png')
+    return True
     
 
 

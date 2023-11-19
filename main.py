@@ -110,8 +110,9 @@ def handle_recorded_input():
         elif user_text is None:
             user_text = ''
         
-    
         post_user_message(user_text, use_emotion=True if emotion is not None else False)   
+        if emotion and not user_text:
+            user_text += 'Current emotion detected from image: ' + emotion + '.'
         
         #emotionFile = GetPicToDisplay(user_text, user_emotion = True)
                    #give the chatgpt
@@ -126,32 +127,18 @@ def handle_recorded_input():
 
         return create_json_response(therapist_text, directory_path,user_text=user_text)
         
-
         
     except Exception as e:
         print(e)
         return jsonify({'success': False, 'error': str(e)})
 
-@app.route('/plot', methods=['POST'])
-def plot():
-    print("Got a request! Plot")
-    try:
-        encoded_string = plot_sentiment_graph()
-        if not encoded_string:
-            return jsonify({'success': False, 'error': 'No emotions detected'})
-        return jsonify({'success': True, 'image': encoded_string.decode('utf-8')})
-    except Exception as e:
-        print(e)
-        return jsonify({'success': False, 'error': str(e)})
-
-@app.route('/sessionstats', methods=['GET'])
+@app.route('/sessionstats', methods=['POST'])
 def get_session_stats():
     print("Got a request! Session stats")
     plot_data = plot_sentiment_graph() # base64 encoded string
     if not plot_data:
         return jsonify({'success': False, 'error': 'No emotions detected'})
-    curr_dir = os.getcwd()
-    return render_template('Wireframe2.html', curr_dir=curr_dir, plot_data=plot_data)
+    return jsonify({'success': True, 'message': 'Successfully saved session stats'})
 
 
 if __name__ == "__main__": 
