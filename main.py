@@ -1,6 +1,6 @@
 from backend.speech.TextToVoice import convert_to_voice
 from backend.speech.VoiceToText import transcribe
-from backend.therapy import get_therapist_message, post_user_message,post_system_message, add_emotion, GetPicToDisplay
+from backend.therapy import get_therapist_message, post_user_message,post_system_message, add_emotion, plot_sentiment_graph
 from flask import Flask, jsonify, request, send_file,render_template,send_file, make_response
 from backend.vision.emotions import get_emotion_from_image
 import os
@@ -79,7 +79,6 @@ def handle_text_input():
         print(e)
         return jsonify({'success': False, 'error': str(e)})
 
-
 @app.route('/postinput', methods=['POST'])
 def handle_recorded_input():
     ''''''
@@ -106,6 +105,11 @@ def handle_recorded_input():
             add_emotion(emotion)
 
         user_text = transcribe('backend/speech/in/user_response.mp3')
+        if user_text is None and emotion is None:
+            user_text = 'Sorry, I did not understand that.'
+        elif user_text is None:
+            user_text = ''
+        
     
         post_user_message(user_text, use_emotion=True if emotion is not None else False)   
         
@@ -128,8 +132,26 @@ def handle_recorded_input():
         print(e)
         return jsonify({'success': False, 'error': str(e)})
 
+@app.route('/plot', methods=['POST'])
+def plot():
+    print("Got a request! Plot")
+    try:
+        encoded_string = plot_sentiment_graph()
+        if not encoded_string:
+            return jsonify({'success': False, 'error': 'No emotions detected'})
+        return jsonify({'success': True, 'image': encoded_string.decode('utf-8')})
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'error': str(e)})
 
-
+@app.route('/sessionstats', methods=['GET'])
+def get_session_stats():
+    print("Got a request! Session stats")
+    plot_data = plot_sentiment_graph() # base64 encoded string
+    if not plot_data:
+        return jsonify({'success': False, 'error': 'No emotions detected'})
+    curr_dir = os.getcwd()
+    return render_template('Wireframe2.html', curr_dir=curr_dir, plot_data=plot_data)
 
 
 if __name__ == "__main__": 
